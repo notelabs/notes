@@ -10,7 +10,7 @@ import {
     useColorModeValue,
     createIcon,
 } from '@chakra-ui/react';
-import { FadeAndSlide } from './transitions/FadeAndSlide';
+import { FadeAndSlide } from '.';
 
 type HeroProps = {
     heading: string
