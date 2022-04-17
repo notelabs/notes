@@ -10,6 +10,7 @@ import {
     useColorModeValue,
     createIcon,
 } from '@chakra-ui/react';
+import { FadeAndSlide } from './transitions/FadeAndSlide';
 
 export function Hero() {
     return (
@@ -27,24 +28,30 @@ export function Hero() {
                     textAlign={'center'}
                     spacing={{ base: 8, md: 14 }}
                     py={{ base: 20, md: 36 }}>
-                    <Heading size="4xl">
-                        Take notes on the future of notetaking.
-                    </Heading>
-                    <Text color={'gray.500'}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </Text>
-                    <Stack direction={['column', 'row']} justifyContent="center">
-                        <Button
-                            colorScheme="blue"
-                            rounded={'full'}
-                            px={6}
-                        >
-                            Get Started
-                        </Button>
-                        <Button variant={'ghost'} px={6} rounded={'full'} colorScheme={'blue'}>
-                            Learn more
-                        </Button>
-                    </Stack>
+                    <FadeAndSlide>
+                        <Heading size="4xl">
+                            Take notes on the future of notetaking.
+                        </Heading>
+                    </FadeAndSlide>
+                    <FadeAndSlide delay={0.4}>
+                        <Text color={'gray.500'}>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </Text>
+                    </FadeAndSlide>
+                    <FadeAndSlide delay={0.8}>
+                        <Stack direction={['column', 'row']} justifyContent="center">
+                            <Button
+                                colorScheme="blue"
+                                rounded={'full'}
+                                px={6}
+                            >
+                                Get Started
+                            </Button>
+                            <Button variant={'ghost'} px={6} rounded={'full'} colorScheme={'blue'}>
+                                Learn more
+                            </Button>
+                        </Stack>
+                    </FadeAndSlide>
                 </Stack>
             </Container>
         </>
