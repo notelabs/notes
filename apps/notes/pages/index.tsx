@@ -1,8 +1,9 @@
-import { Button } from "ui";
+import { Button, Nav } from "ui";
 
-export default function Docs() {
+export default function Notes() {
   return (
     <div>
+      <Nav />
       <h1>Docs</h1>
       <Button />
     </div>

@@ -21,7 +21,7 @@ import { HamburgerIcon, CloseIcon, SunIcon, MoonIcon } from '@chakra-ui/icons';
 import { Fade } from '.';
 
 type NavProps = {
-    links: NavLinkProps[]
+    links?: NavLinkProps[]
 }
 
 type NavLinkProps = {
@@ -46,6 +46,8 @@ const NavLink = ({ name, href }: NavLinkProps) => (
 export function Nav({ links }: NavProps) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { colorMode, toggleColorMode } = useColorMode()
+
+    links ??= []
 
     return (
         <Fade delay={1.6}>
