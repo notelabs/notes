@@ -6,8 +6,7 @@ module.exports = withTM({
     return [
       {
         source: "/notes",
-        destination: "https://noteslabs-app.vercel.app/",
-        permanent: true
+        destination: "https://noteslabs-app.vercel.app/"
       }
     ]
   }
