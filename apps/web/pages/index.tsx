@@ -20,7 +20,7 @@ export default function Web() {
         <Hero
           heading="Take notes on the future of notetaking."
           description="Notelabs makes it easy to to write down your thoughts. Choose your devices, and let Notelabs seamlessly adept to them, letting you get back to your writing."
-          mainLink="/notes"
+          mainLink="/app"
         />
       </div>
     </>

@@ -9,8 +9,12 @@ module.exports = withTM({
   async rewrites() {
     return [
       {
-        source: "/app/:path*",
-        destination: "https://noteslabs-app.vercel.app/app/:path*"
+        source: "/app",
+        destination: "https://noteslabs-app.vercel.app/app"
+      },
+      {
+        source: "/app/:match*",
+        destination: "https://noteslabs-app.vercel.app/app/:match*"
       }
     ]
   },
