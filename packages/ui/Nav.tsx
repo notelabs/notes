@@ -15,13 +15,19 @@ import {
     useColorModeValue,
     Stack,
     useColorMode,
-    Heading
+    Heading,
+    Container
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon, SunIcon, MoonIcon } from '@chakra-ui/icons';
 import { Fade } from '.';
 
 type NavProps = {
     links?: NavLinkProps[]
+}
+
+type MarketingNavProps = {
+    links?: NavLinkProps[]
+    delay?: number
 }
 
 type NavLinkProps = {
@@ -43,15 +49,15 @@ const NavLink = ({ name, href }: NavLinkProps) => (
     </Link>
 );
 
-export function Nav({ links }: NavProps) {
+export function MarketingNav({ links, delay }: MarketingNavProps) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { colorMode, toggleColorMode } = useColorMode()
 
     links ??= []
 
     return (
-        <Fade delay={1.6}>
-            <Box px={4}>
+        <Fade delay={delay ? delay : 1.6}>
+            <Container maxW="container.lg" px={4}>
                 <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
                     <IconButton
                         size={'md'}
@@ -103,7 +109,70 @@ export function Nav({ links }: NavProps) {
                         </Stack>
                     </Box>
                 ) : null}
-            </Box>
+            </Container>
         </Fade>
+    );
+}
+
+export function Nav({ links }: NavProps) {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const { colorMode, toggleColorMode } = useColorMode()
+
+    links ??= []
+
+    return (
+            <Container maxW="container.lg" px={4}>
+                <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+                    <IconButton
+                        size={'md'}
+                        icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+                        aria-label={'Open Menu'}
+                        display={{ md: 'none' }}
+                        onClick={isOpen ? onClose : onOpen}
+                    />
+                    <HStack spacing={8} alignItems={'center'}>
+                        <Heading size="md" py={2}>Notelabs</Heading>
+                        <HStack
+                            as={'nav'}
+                            spacing={4}
+                            display={{ base: 'none', md: 'flex' }}>
+                            {links.map((link) => (
+                                <NavLink key={link.href} name={link.name} href={link.href} />
+                            ))}
+                        </HStack>
+                    </HStack>
+                    <HStack alignItems={'center'} spacing={4}>
+                        <IconButton variant="ghost" rounded="full" aria-label='Toggle theme' onClick={toggleColorMode} icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />} />
+                        <Menu>
+                            <MenuButton
+                                as={Button}
+                                rounded={'full'}
+                                variant={'link'}
+                                cursor={'pointer'}
+                                minW={0}>
+                                <Avatar
+                                    size={'sm'}
+                                />
+                            </MenuButton>
+                            <MenuList>
+                                <MenuItem>Link 1</MenuItem>
+                                <MenuItem>Link 2</MenuItem>
+                                <MenuDivider />
+                                <MenuItem>Link 3</MenuItem>
+                            </MenuList>
+                        </Menu>
+                    </HStack>
+                </Flex>
+
+                {isOpen ? (
+                    <Box pb={4} display={{ md: 'none' }}>
+                        <Stack as={'nav'} spacing={4}>
+                            {links.map((link) => (
+                                <NavLink key={link.href} name={link.name} href={link.href} />
+                            ))}
+                        </Stack>
+                    </Box>
+                ) : null}
+            </Container>
     );
 }

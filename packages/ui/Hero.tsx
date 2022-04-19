@@ -11,19 +11,21 @@ import {
     createIcon,
 } from '@chakra-ui/react';
 import { FadeAndSlide } from '.';
+import Link from "next/link"
 
 type HeroProps = {
     heading: string
     description: string
+    mainLink: string
 }
 
-export function Hero({ heading, description }: HeroProps) {
+export function Hero({ heading, description, mainLink }: HeroProps) {
     return (
         <>
             <Head>
                 <link
-                    href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap"
-                    rel="stylesheet"
+                    href={mainLink}
+                    rel="prefetch"
                 />
             </Head>
 
@@ -45,13 +47,15 @@ export function Hero({ heading, description }: HeroProps) {
                     </FadeAndSlide>
                     <FadeAndSlide delay={0.8}>
                         <Stack direction={['column', 'row']} justifyContent="center">
-                            <Button
-                                colorScheme="blue"
-                                rounded={'full'}
-                                px={6}
-                            >
-                                Get Started
-                            </Button>
+                            <Link href={mainLink}>
+                                <Button
+                                    colorScheme="blue"
+                                    rounded={'full'}
+                                    px={6}
+                                >
+                                    Get Started
+                                </Button>
+                            </Link>
                             <Button variant={'ghost'} px={6} rounded={'full'} colorScheme={'blue'}>
                                 Learn more
                             </Button>
