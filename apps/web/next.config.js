@@ -14,5 +14,4 @@ module.exports = withTM({
       }
     ]
   },
-  basePath: "/notes"
 });
