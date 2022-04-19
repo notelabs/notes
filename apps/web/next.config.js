@@ -2,7 +2,7 @@ const withTM = require("next-transpile-modules")(["ui"]);
 
 module.exports = withTM({
   reactStrictMode: true,
-  async rewrite() {
+  async rewrites() {
     return [
       {
         source: "/notes",
