@@ -10,7 +10,7 @@ module.exports = withTM({
     return [
       {
         source: "/notes/:path*",
-        destination: "https://noteslabs-app.vercel.app/notes/:path*"
+        destination: "https://noteslabs-app.vercel.app/:path*"
       }
     ]
   },
