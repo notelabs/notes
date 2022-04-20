@@ -40,7 +40,6 @@ export default function Notes() {
               defaultValue="Document"
               isPreviewFocusable={true}
               selectAllOnFocus={false}
-              startWithEditView
             >
               <Tooltip label="Click to edit">
                 <Heading py={2} mt={1} as={EditablePreview} size="sm" />
