@@ -20,6 +20,7 @@ import {
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon, SunIcon, MoonIcon } from '@chakra-ui/icons';
 import { Fade } from '.';
+import Head from "next/head"
 
 type NavProps = {
     links?: NavLinkProps[]
@@ -119,10 +120,16 @@ export function Nav({ links, title }: NavProps) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { colorMode, toggleColorMode } = useColorMode()
 
+    let linksUndefined = !links
+
     links ??= []
     title ??= "Notelabs"
 
     return (
+        <>
+        <Head>
+            <title>{title === "Notelabs" ? title : `${title} - Notelabs`}</title>
+        </Head>
             <Container maxW="container.lg" px={4}>
                 <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
                     <IconButton
@@ -131,6 +138,7 @@ export function Nav({ links, title }: NavProps) {
                         aria-label={'Open Menu'}
                         display={{ md: 'none' }}
                         onClick={isOpen ? onClose : onOpen}
+                        isDisabled={linksUndefined}
                     />
                     <HStack spacing={8} alignItems={'center'}>
                         <Heading size="md" py={2}>{title}</Heading>
@@ -176,5 +184,6 @@ export function Nav({ links, title }: NavProps) {
                     </Box>
                 ) : null}
             </Container>
+        </>
     );
 }
