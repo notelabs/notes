@@ -7,7 +7,7 @@ export default function Notes() {
   let shadow = useColorModeValue("xs", "")
   let hoverShadow = useColorModeValue("xl", "")
   const { colorMode } = useColorMode()
-  const secondaryColor = useColor({color: "secondary", theme: colorMode})
+  const secondaryColor = useColor({color: "secondary"})
 
   function EditableControls() {
     const {
