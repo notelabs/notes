@@ -16,9 +16,10 @@ export default function Notes() {
 
     return isEditing ? (
       <ButtonGroup size="sm" spacing={2} mt={2}>
-        <IconButton icon={<CheckIcon />} {...getSubmitButtonProps()} />
+        <IconButton icon={<CheckIcon />} aria-label="Submit" {...getSubmitButtonProps()} />
         <IconButton
           icon={<CloseIcon boxSize={3} />}
+          aria-label="Cancel"
           {...getCancelButtonProps()}
         />
       </ButtonGroup>
@@ -40,10 +41,10 @@ export default function Notes() {
               startWithEditView
             >
               <Tooltip label="Click to edit">
-                <Heading py={2} pb={3} mt={0.5} as={EditablePreview} size="sm" />
+                <Heading py={2} pb={1} mt={0.5} as={EditablePreview} size="sm" />
               </Tooltip>
               <HStack>
-              <Input py={1} px={0} size="md" variant="flushed" fontWeight="bold" as={EditableInput} />
+              <Input pt={1} px={0} size="md" variant="flushed" fontWeight="bold" as={EditableInput} />
               <EditableControls />
               </HStack>
             </Editable>
