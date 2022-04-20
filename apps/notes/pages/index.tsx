@@ -1,10 +1,13 @@
 import { Nav } from "ui";
-import { Box, ButtonGroup, Container, Editable, EditableInput, EditablePreview, Heading, HStack, IconButton, Input, SimpleGrid, Text, Tooltip, useColorModeValue, useEditableControls } from "@chakra-ui/react"
+import { Box, ButtonGroup, Container, Editable, EditableInput, EditablePreview, Heading, HStack, IconButton, Input, SimpleGrid, Text, Tooltip, useColorMode, useColorModeValue, useEditableControls } from "@chakra-ui/react"
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import { useColor } from "hooks"
 
 export default function Notes() {
   let shadow = useColorModeValue("xs", "")
   let hoverShadow = useColorModeValue("xl", "")
+  const { colorMode } = useColorMode()
+  const secondaryColor = useColor({color: "secondary", theme: colorMode})
 
   function EditableControls() {
     const {
@@ -48,7 +51,7 @@ export default function Notes() {
                 <EditableControls />
               </HStack>
             </Editable>
-            <Text as="small" color="ActiveCaption">Edited yesterday</Text>
+            <Text as="small" color={secondaryColor}>Edited yesterday</Text>
           </Box>
         </SimpleGrid>
       </Container>
