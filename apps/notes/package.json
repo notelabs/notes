@@ -12,7 +12,13 @@
     "next": "12.0.8",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "ui": "*"
+    "ui": "*",
+    "@chakra-ui/icons": "^1.1.7",
+    "@chakra-ui/react": "^1.8.8",
+    "@emotion/react": "11",
+    "@emotion/styled": "11",
+    "cal-sans": "^1.0.1",
+    "framer-motion": "6"
   },
   "devDependencies": {
     "config": "*",

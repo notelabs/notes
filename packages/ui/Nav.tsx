@@ -23,6 +23,7 @@ import { Fade } from '.';
 
 type NavProps = {
     links?: NavLinkProps[]
+    title?: string
 }
 
 type MarketingNavProps = {
@@ -114,11 +115,12 @@ export function MarketingNav({ links, delay }: MarketingNavProps) {
     );
 }
 
-export function Nav({ links }: NavProps) {
+export function Nav({ links, title }: NavProps) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { colorMode, toggleColorMode } = useColorMode()
 
     links ??= []
+    title ??= "Notelabs"
 
     return (
             <Container maxW="container.lg" px={4}>
@@ -131,7 +133,7 @@ export function Nav({ links }: NavProps) {
                         onClick={isOpen ? onClose : onOpen}
                     />
                     <HStack spacing={8} alignItems={'center'}>
-                        <Heading size="md" py={2}>Notelabs</Heading>
+                        <Heading size="md" py={2}>{title}</Heading>
                         <HStack
                             as={'nav'}
                             spacing={4}
