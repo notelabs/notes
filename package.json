@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "web-build": "turbo run build --filter=web...",
+    "web-build": "turbo run build --filter=notes-homepage...",
     "notes-build": "turbo run build --filter=notes...",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
