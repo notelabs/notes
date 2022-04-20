@@ -2,4 +2,4 @@ image:
   file: .gitpod.Dockerfile
 tasks:
   - init: yarn install
-    command: vercel login --github --oob && vercel link --confirm && vercel pull
+    command: vercel login --github --oob && vercel link ./apps/notes --scope glynhack && vercel link ./apps/web --scope glynhack && vercel pull ./apps/notes && vercel pull ./apps/web
