@@ -13,6 +13,7 @@
     "@chakra-ui/react": "^1.8.8",
     "@emotion/react": "11",
     "@emotion/styled": "11",
+    "@prisma/client": "^3.12.0",
     "cal-sans": "^1.0.1",
     "framer-motion": "6",
     "hooks": "*",
@@ -28,6 +29,7 @@
     "config": "*",
     "eslint": "7.32.0",
     "next-transpile-modules": "9.0.0",
+    "prisma": "^3.12.0",
     "tsconfig": "*",
     "typescript": "^4.5.3"
   }
