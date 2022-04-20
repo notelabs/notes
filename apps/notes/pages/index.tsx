@@ -41,11 +41,11 @@ export default function Notes() {
               startWithEditView
             >
               <Tooltip label="Click to edit">
-                <Heading py={2} pb={1} mt={0.5} as={EditablePreview} size="sm" />
+                <Heading py={2} mt={1} as={EditablePreview} size="sm" />
               </Tooltip>
               <HStack>
-              <Input pt={1} px={0} size="md" variant="flushed" fontWeight="bold" as={EditableInput} />
-              <EditableControls />
+                <Input pt={2.5} mb={0.5} size="md" variant="unstyled" fontWeight="bold" _focus={{ boxShadow: "none" }} as={EditableInput} />
+                <EditableControls />
               </HStack>
             </Editable>
             <Text as="small" color="ActiveCaption">Edited yesterday</Text>
