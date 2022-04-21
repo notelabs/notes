@@ -73,7 +73,7 @@ export function Sidebar({
                 </DrawerContent>
             </Drawer>
             {/* mobilenav */}
-            <MobileNav onOpen={onOpen} />
+            <MobileNav onOpen={onOpen} title={title} />
             <Box ml={{ base: 0, md: 60 }} p="4">
                 {children}
             </Box>
@@ -151,8 +151,9 @@ const NavItem = ({ icon, children, href, ...rest }: NavItemProps) => {
 
 interface MobileProps extends FlexProps {
     onOpen: () => void;
+    title: string
 }
-const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+const MobileNav = ({ onOpen, title, ...rest }: MobileProps) => {
     return (
         <Flex
             ml={{ base: 0, md: 60 }}
@@ -172,13 +173,12 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                 icon={<FiMenu />}
             />
 
-            <Text
+            <Heading
                 display={{ base: 'flex', md: 'none' }}
                 fontSize="2xl"
-                fontFamily="monospace"
                 fontWeight="bold">
-                Logo
-            </Text>
+                {title}
+            </Heading>
 
             <HStack spacing={{ base: '0', md: '6' }}>
                 <IconButton

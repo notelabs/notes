@@ -2,11 +2,14 @@ import { Layout, Nav, Sidebar } from "ui";
 import { Box, ButtonGroup, Container, Editable, EditableInput, EditablePreview, Heading, HStack, IconButton, Input, SimpleGrid, Text, Tooltip, useColorMode, useColorModeValue, useEditableControls } from "@chakra-ui/react"
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import { useColor } from "hooks"
+import { useSession } from "next-auth/react"
 
 export default function Notes() {
   let shadow = useColorModeValue("xs", "")
   let hoverShadow = useColorModeValue("xl", "")
   const secondaryColor = useColor({ color: "secondary" })
+  const {data, status} = useSession()
+  console.log(data, status)
 
   function EditableControls() {
     const {
@@ -33,7 +36,7 @@ export default function Notes() {
     <div>
       <Layout>
         <Container maxW="container.lg" mt={6}>
-          <SimpleGrid columns={[2, null, 3]}>
+          <SimpleGrid columns={[1, null, 3]}>
             <Box p={5} borderWidth="1px" borderRadius={6}>
               <Box transition="all 0.3s ease" borderRadius={6} boxShadow={shadow} _hover={{ boxShadow: hoverShadow }} p={5} mb={5}>Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.</Box>
               <Editable
