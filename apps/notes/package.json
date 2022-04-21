@@ -17,6 +17,7 @@
     "@prisma/client": "^3.12.0",
     "cal-sans": "^1.0.1",
     "framer-motion": "6",
+    "gradient-avatar": "^1.0.2",
     "hooks": "*",
     "next": "12.0.8",
     "next-auth": "^4.3.3",

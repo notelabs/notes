@@ -22,38 +22,7 @@ import { signIn } from "next-auth/react"
 import { useState } from 'react';
 import Head from 'next/head';
 import Link from "next/link"
-
-type FeatureList = {
-    icon: typeof HiBeaker
-    text: string
-}
-
-const list: FeatureList[] = [
-    {
-        icon: HiBeaker,
-        text: "Beta program"
-    },
-    {
-        icon: HiLightningBolt,
-        text: "Fast UI"
-    },
-    {
-        icon: HiKey,
-        text: "Secure data"
-    },
-    {
-        icon: HiDeviceMobile,
-        text: "Mobile website"
-    },
-    {
-        icon: HiDocumentDownload,
-        text: "Own your data"
-    },
-    {
-        icon: HiCollection,
-        text: "Draggable"
-    }
-]
+import { FeatureList, list } from '../../lib/features';
 
 export default function Error() {
     let [isLoading, setLoading] = useState("")

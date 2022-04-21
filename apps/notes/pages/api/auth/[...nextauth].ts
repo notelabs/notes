@@ -8,7 +8,8 @@ export default NextAuth({
   pages: {
     signIn: '/app/auth/login',
     error: '/app/auth/error',
-    verifyRequest: '/app/auth/verify'
+    verifyRequest: '/app/auth/verify',
+    newUser: '/app/auth/set-details'
   },
   secret: process.env.SECRET,
   adapter: PrismaAdapter(prisma),
