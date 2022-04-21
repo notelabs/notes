@@ -45,7 +45,7 @@ export default function Notes() {
                   <Heading py={2} mt={1} as={EditablePreview} size="sm" />
                 </Tooltip>
                 <HStack>
-                  <Input pt={2.5} mb={0.5} size="md" variant="unstyled" fontWeight="bold" _focus={{ boxShadow: "none" }} as={EditableInput} />
+                  <Input pt={2.5} mb={0.5} size="md" variant="unstyled" fontWeight="bold" _focus={{ boxShadow: "none" }} fontFamily="Cal Sans, sans-serif" as={EditableInput} />
                   <EditableControls />
                 </HStack>
               </Editable>
