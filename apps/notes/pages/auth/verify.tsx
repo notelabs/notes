@@ -6,7 +6,6 @@ import {
     FormLabel,
     Heading,
     Input,
-    Link,
     Stack,
     Image,
     SimpleGrid,
@@ -18,9 +17,10 @@ import {
 } from '@chakra-ui/react';
 import { Nav } from 'ui';
 import { HiBeaker, HiCollection, HiDeviceMobile, HiDocumentDownload, HiKey, HiLightningBolt, HiPhone } from 'react-icons/hi';
-import { FaGithub } from 'react-icons/fa';
 import { signIn } from "next-auth/react"
 import { useState } from 'react';
+import Link from "next/link"
+import Head from 'next/head';
 
 type FeatureList = {
     icon: typeof HiBeaker
@@ -70,11 +70,19 @@ export default function Verify() {
 
     return (
         <>
+            <Head>
+                <title>Magic link sent - Notelabs</title>
+            </Head>
             <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
                 <Flex p={8} flex={1} align={'center'} justify={'center'}>
                     <Stack spacing={4} w={'full'} maxW={'md'}>
                         <Heading fontSize={'3xl'}>Magic link sent</Heading>
-                        <Text opacity={0.75}>Whilst you where trying to sign in, an error occured.</Text>
+                        <Text opacity={0.75} pb={6}>Check your email for your magic link, which will allow you to sign in.</Text>
+                        <Link href='/'>
+                        <Button colorScheme="blue">
+                            Go home
+                        </Button>
+                        </Link>
                     </Stack>
                 </Flex>
                 <Flex flex={1}>

@@ -21,6 +21,7 @@ import { HiBeaker, HiCollection, HiDeviceMobile, HiDocumentDownload, HiKey, HiLi
 import { FaGithub } from 'react-icons/fa';
 import { signIn } from "next-auth/react"
 import { useState } from 'react';
+import Head from 'next/head';
 
 type FeatureList = {
     icon: typeof HiBeaker
@@ -58,18 +59,21 @@ export default function Login() {
     let [isLoading, setLoading] = useState("")
     let [email, setEmail] = useState("")
 
-    function signInGithub () {
+    function signInGithub() {
         setLoading("github")
-        signIn("github", {callbackUrl: "/app"})
+        signIn("github", { callbackUrl: "/app" })
     }
 
-    function signInEmail (email: string) {
+    function signInEmail(email: string) {
         setLoading("email")
-        signIn("email", {callbackUrl: "/app", email})
+        signIn("email", { callbackUrl: "/app", email })
     }
 
     return (
         <>
+            <Head>
+                <title>Login - Notelabs</title>
+            </Head>
             <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
                 <Flex p={8} flex={1} align={'center'} justify={'center'}>
                     <Stack spacing={4} w={'full'} maxW={'md'}>
