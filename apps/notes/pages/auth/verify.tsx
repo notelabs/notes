@@ -58,14 +58,14 @@ export default function Verify() {
     let [isLoading, setLoading] = useState("")
     let [email, setEmail] = useState("")
 
-    function signInGithub () {
+    function signInGithub() {
         setLoading("github")
-        signIn("github", {callbackUrl: "/app"})
+        signIn("github", { callbackUrl: "/app" })
     }
 
-    function signInEmail (email: string) {
+    function signInEmail(email: string) {
         setLoading("email")
-        signIn("email", {callbackUrl: "/app", email})
+        signIn("email", { callbackUrl: "/app", email })
     }
 
     return (
@@ -79,9 +79,9 @@ export default function Verify() {
                         <Heading fontSize={'3xl'}>Magic link sent</Heading>
                         <Text opacity={0.75} pb={6}>Check your email for your magic link, which will allow you to sign in.</Text>
                         <Link href='/'>
-                        <Button colorScheme="blue">
-                            Go home
-                        </Button>
+                            <Button colorScheme="blue">
+                                Go home
+                            </Button>
                         </Link>
                     </Stack>
                 </Flex>

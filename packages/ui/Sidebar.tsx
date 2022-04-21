@@ -21,7 +21,9 @@ import {
     MenuDivider,
     MenuItem,
     MenuList,
-    Heading
+    Heading,
+    SkeletonCircle,
+    Skeleton
 } from '@chakra-ui/react';
 import {
     FiMenu,
@@ -31,6 +33,8 @@ import {
 import { IconType } from 'react-icons';
 import { ReactText } from 'react';
 import { useColor } from "hooks";
+import { useSession } from "next-auth/react"
+
 
 type SidenavProps = {
     links: LinkItemProps[]
@@ -119,8 +123,8 @@ interface NavItemProps extends FlexProps {
     href: string
 }
 const NavItem = ({ icon, children, href, ...rest }: NavItemProps) => {
-    const secondary = useColor({color: "secondary"})
-    const hover = useColor({color: "hover"})
+    const secondary = useColor({ color: "secondary" })
+    const hover = useColor({ color: "hover" })
     return (
         <Link href={href} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
             <Flex
@@ -154,6 +158,8 @@ interface MobileProps extends FlexProps {
     title: string
 }
 const MobileNav = ({ onOpen, title, ...rest }: MobileProps) => {
+    const { data: session, status } = useSession()
+
     return (
         <Flex
             ml={{ base: 0, md: 60 }}
@@ -194,21 +200,27 @@ const MobileNav = ({ onOpen, title, ...rest }: MobileProps) => {
                             transition="all 0.3s"
                             _focus={{ boxShadow: 'none' }}>
                             <HStack>
-                                <Avatar
-                                    size={'sm'}
-                                    src={
-                                        'https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                                    }
-                                />
+                                <SkeletonCircle isLoaded={status !== "loading"}>
+                                    <Avatar
+                                        size={'sm'}
+                                        src={
+                                            'https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
+                                        }
+                                    />
+                                </SkeletonCircle>
                                 <VStack
                                     display={{ base: 'none', md: 'flex' }}
                                     alignItems="flex-start"
                                     spacing="1px"
                                     ml="2">
-                                    <Text fontSize="sm">Justina Clark</Text>
-                                    <Text fontSize="xs" color="gray.600">
-                                        Admin
-                                    </Text>
+                                    <Skeleton isLoaded={status !== "loading"}>
+                                        <Text fontSize="sm">Justina Clark</Text>
+                                    </Skeleton>
+                                    <Skeleton isLoaded={status !== "loading"}>
+                                        <Text fontSize="xs" color="gray.600">
+                                            Admin
+                                        </Text>
+                                    </Skeleton>
                                 </VStack>
                                 <Box display={{ base: 'none', md: 'flex' }}>
                                     <FiChevronDown />

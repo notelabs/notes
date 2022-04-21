@@ -6,7 +6,6 @@ import {
     FormLabel,
     Heading,
     Input,
-    Link,
     Stack,
     Image,
     SimpleGrid,
@@ -22,6 +21,7 @@ import { FaGithub } from 'react-icons/fa';
 import { signIn } from "next-auth/react"
 import { useState } from 'react';
 import Head from 'next/head';
+import Link from "next/link"
 
 type FeatureList = {
     icon: typeof HiBeaker
@@ -78,7 +78,12 @@ export default function Error() {
                 <Flex p={8} flex={1} align={'center'} justify={'center'}>
                     <Stack spacing={4} w={'full'} maxW={'md'}>
                         <Heading fontSize={'3xl'}>An error occured</Heading>
-                        <Text opacity={0.75}>Whilst you where trying to sign in, an error occured.</Text>
+                        <Text opacity={0.75} pb={6}>Whilst you where trying to sign in, an error occured.</Text>
+                        <Link href='/'>
+                            <Button colorScheme="blue">
+                                Go home
+                            </Button>
+                        </Link>
                     </Stack>
                 </Flex>
                 <Flex flex={1}>
