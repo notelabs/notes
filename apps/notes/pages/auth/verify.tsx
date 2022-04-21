@@ -54,12 +54,18 @@ const list: FeatureList[] = [
     }
 ]
 
-export default function Login() {
+export default function Verify() {
     let [isLoading, setLoading] = useState("")
+    let [email, setEmail] = useState("")
 
     function signInGithub () {
         setLoading("github")
         signIn("github", {callbackUrl: "/app"})
+    }
+
+    function signInEmail (email: string) {
+        setLoading("email")
+        signIn("email", {callbackUrl: "/app", email})
     }
 
     return (
@@ -67,25 +73,13 @@ export default function Login() {
             <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
                 <Flex p={8} flex={1} align={'center'} justify={'center'}>
                     <Stack spacing={4} w={'full'} maxW={'md'}>
-                        <Heading fontSize={'3xl'}>Sign in to your account</Heading>
-                        <Text opacity={0.75}>Enter your email to sign in with a magic link, or sign in with a provider.</Text>
-                        <FormControl id="email">
-                            <Input type="email" placeholder='Enter an email' />
-                        </FormControl>
-                        <Stack spacing={6}>
-                            <Button colorScheme={'blue'} variant={'solid'}>
-                                Sign in
-                            </Button>
-                        </Stack>
-                        <Divider py={3} />
-                        <Button colorScheme="gray" leftIcon={<Icon as={FaGithub} />} onClick={signInGithub} isLoading={isLoading === "github"}>
-                            Continue with GitHub
-                        </Button>
+                        <Heading fontSize={'3xl'}>Magic link sent</Heading>
+                        <Text opacity={0.75}>Whilst you where trying to sign in, an error occured.</Text>
                     </Stack>
                 </Flex>
                 <Flex flex={1}>
                     <Center w="full">
-                        <SimpleGrid columns={[1, null, 3]} spacing={8}>
+                        <SimpleGrid columns={[2, null, 3]} spacing={8}>
                             {list.map((i: FeatureList) => (
                                 <VStack key={i.text}>
                                     <Icon as={i.icon} boxSize={8} />

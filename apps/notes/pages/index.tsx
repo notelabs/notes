@@ -1,8 +1,8 @@
 import { Layout, Nav, Sidebar } from "ui";
-import { Box, ButtonGroup, Container, Editable, EditableInput, EditablePreview, Heading, HStack, IconButton, Input, SimpleGrid, Text, Tooltip, useColorMode, useColorModeValue, useEditableControls } from "@chakra-ui/react"
+import { Box, Button, ButtonGroup, Container, Editable, EditableInput, EditablePreview, Heading, HStack, IconButton, Input, SimpleGrid, Text, Tooltip, useColorMode, useColorModeValue, useEditableControls } from "@chakra-ui/react"
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import { useColor } from "hooks"
-import { useSession } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
 
 export default function Notes() {
   let shadow = useColorModeValue("xs", "")
@@ -55,6 +55,7 @@ export default function Notes() {
               <Text as="small" color={secondaryColor}>Edited yesterday</Text>
             </Box>
           </SimpleGrid>
+          <Button onClick={() => signIn()}>Login</Button>
         </Container>
       </Layout>
     </div>
