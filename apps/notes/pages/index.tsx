@@ -55,7 +55,6 @@ export default function Notes() {
               <Text as="small" color={secondaryColor}>Edited yesterday</Text>
             </Box>
           </SimpleGrid>
-          <Button onClick={() => signIn()}>Login</Button>
         </Container>
       </Layout>
     </div>

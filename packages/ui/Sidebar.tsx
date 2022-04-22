@@ -23,17 +23,23 @@ import {
     MenuList,
     Heading,
     SkeletonCircle,
-    Skeleton
+    Skeleton,
+    Spacer,
+    Grid,
+    ButtonGroup,
+    useColorMode,
+    Divider
 } from '@chakra-ui/react';
 import {
     FiMenu,
     FiBell,
     FiChevronDown,
 } from 'react-icons/fi';
+import { RiSunFill, RiMoonFill, RiGithubFill, RiTwitterFill } from 'react-icons/ri'
 import { IconType } from 'react-icons';
 import { ReactText } from 'react';
 import { useColor } from "hooks";
-import { useSession } from "next-auth/react"
+import { useSession, signIn, signOut } from "next-auth/react"
 
 
 type SidenavProps = {
@@ -92,9 +98,9 @@ interface SidebarProps extends BoxProps {
 }
 
 const SidebarContent = ({ onClose, title, linkItems, ...rest }: SidebarProps) => {
+    const { colorMode, toggleColorMode } = useColorMode()
     return (
         <Box
-            transition="3s ease"
             bg={useColorModeValue('white', 'gray.900')}
             borderRight="1px"
             borderRightColor={useColorModeValue('gray.200', 'gray.700')}
@@ -108,11 +114,31 @@ const SidebarContent = ({ onClose, title, linkItems, ...rest }: SidebarProps) =>
                 </Heading>
                 <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
             </Flex>
-            {linkItems.map((link) => (
-                <NavItem key={link.name} href={link.href} icon={link.icon}>
-                    {link.name}
-                </NavItem>
-            ))}
+            <Grid h="91vh" templateColumns="auto" gridTemplateRows="auto auto auto">
+                <Box>
+                    {linkItems.map((link) => (
+                        <NavItem key={link.name} href={link.href} icon={link.icon}>
+                            {link.name}
+                        </NavItem>
+                    ))}
+                </Box>
+                <Spacer />
+                <Flex justifyContent="end" direction="column" p={4} px={6} mb={4}>
+                    <Text as="i" fontSize="xs" opacity={0.75}>Write something awesome</Text>
+                    <Divider my={4} />
+                    <ButtonGroup size="sm" variant="ghost" justifyContent="space-between" w="full">
+                        <Box>
+                            <Link href="https://github.com/notelabs">
+                                <IconButton aria-label='GitHub' icon={<Icon as={RiGithubFill} />} />
+                            </Link>
+                            <Link href="https://twitter.com/trynotelabs">
+                                <IconButton aria-label='Twitter' icon={<Icon as={RiTwitterFill} />} />
+                            </Link>
+                        </Box>
+                        <IconButton onClick={toggleColorMode} aria-label='Toggle theme' icon={<Icon as={colorMode === "light" ? RiSunFill : RiMoonFill} />} />
+                    </ButtonGroup>
+                </Flex>
+            </Grid>
         </Box>
     );
 };
@@ -186,7 +212,7 @@ const MobileNav = ({ onOpen, title, ...rest }: MobileProps) => {
                 {title}
             </Heading>
 
-            <HStack spacing={{ base: '0', md: '6' }}>
+            <HStack spacing={{ base: '4', md: '6' }}>
                 <IconButton
                     size="lg"
                     variant="ghost"
@@ -210,12 +236,13 @@ const MobileNav = ({ onOpen, title, ...rest }: MobileProps) => {
                                     display={{ base: 'none', md: 'flex' }}
                                     alignItems="flex-start"
                                     spacing="1px"
-                                    ml="2">
+                                    ml="2"
+                                >
                                     <Skeleton isLoaded={status !== "loading"}>
                                         <Text fontSize="sm">{session?.user?.name}</Text>
                                     </Skeleton>
                                     <Skeleton isLoaded={status !== "loading"}>
-                                        <Text fontSize="xs" color="gray.600">
+                                        <Text fontSize="xs" color="gray.600" hidden={status === "unauthenticated"}>
                                             Admin
                                         </Text>
                                     </Skeleton>
@@ -227,12 +254,18 @@ const MobileNav = ({ onOpen, title, ...rest }: MobileProps) => {
                         </MenuButton>
                         <MenuList
                             bg={useColorModeValue('white', 'gray.900')}
-                            borderColor={useColorModeValue('gray.200', 'gray.700')}>
-                            <MenuItem>Profile</MenuItem>
-                            <MenuItem>Settings</MenuItem>
-                            <MenuItem>Billing</MenuItem>
-                            <MenuDivider />
-                            <MenuItem>Sign out</MenuItem>
+                            borderColor={useColorModeValue('gray.200', 'gray.700')}
+                            >
+                            <Box hidden={status !== "authenticated"}>
+                                <Link style={{ textDecoration: 'none' }} href='/auth/set-details'>
+                                    <MenuItem>Profile</MenuItem>
+                                </Link>
+                                <MenuDivider />
+                                <MenuItem onClick={() => signOut()}>Sign out</MenuItem>
+                            </Box>
+                            <Box hidden={status === "authenticated"}>
+                                <MenuItem onClick={() => signIn()}>Sign in</MenuItem>
+                            </Box>
                         </MenuList>
                     </Menu>
                 </Flex>
