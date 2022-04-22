@@ -85,7 +85,9 @@ model Document {
     id        String   @id @default(cuid())
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt()
-    content   String
+    title     String   @default("Untitled")
+    summary   String   @default("This document has no summary.")
+    content   String   @default("Write something amazing.")
     owner     String
     user      User     @relation(fields: [owner], references: [id])
 }
