@@ -10,11 +10,11 @@ type LayoutProps = {
 }
 
 const DefaultLinkItems: LinkItemProps[] = [
-    { name: 'Home', icon: FiHome, href: '/app' },
-    { name: 'Trending', icon: FiTrendingUp, href: '/app' },
-    { name: 'Explore', icon: FiCompass, href: '/app' },
-    { name: 'Favourites', icon: FiStar, href: '/app' },
-    { name: 'Settings', icon: FiSettings, href: '/app' },
+    { name: 'Home', icon: FiHome, href: '/' },
+    { name: 'Trending', icon: FiTrendingUp, href: '/' },
+    { name: 'Explore', icon: FiCompass, href: '/' },
+    { name: 'Favourites', icon: FiStar, href: '/' },
+    { name: 'Settings', icon: FiSettings, href: '/' },
 ];
 
 export function Layout ({ children, title }: LayoutProps) {

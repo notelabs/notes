@@ -6,7 +6,7 @@ import { SessionProvider } from 'next-auth/react'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <SessionProvider basePath='/app' baseUrl={process.env.NEXTAUTH_URL}>
+    <SessionProvider>
       <ChakraProvider theme={theme}>
         <Component {...pageProps} />
       </ChakraProvider>

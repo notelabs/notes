@@ -1,44 +1,49 @@
 import {
     Button,
-    Checkbox,
     Flex,
     FormControl,
-    FormLabel,
     Heading,
     Input,
-    Link,
     Stack,
-    Image,
     SimpleGrid,
     Center,
     VStack,
     Icon,
     Text,
-    Divider,
     Avatar,
-    AvatarBadge,
-    IconButton,
     SkeletonCircle,
-    Box,
     HStack,
-    Skeleton,
     Tooltip,
+    FormErrorMessage,
+    Skeleton,
+    FormHelperText,
+    useToast,
 } from '@chakra-ui/react';
-import { Nav } from 'ui';
-import { HiBeaker, HiCollection, HiDeviceMobile, HiDocumentDownload, HiKey, HiLightningBolt, HiPhone } from 'react-icons/hi';
-import { FaGithub } from 'react-icons/fa';
-import { signIn } from "next-auth/react"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { SmallCloseIcon } from '@chakra-ui/icons';
-import avatar from "gradient-avatar"
-import email from 'next-auth/providers/email';
-import { FiChevronDown } from 'react-icons/fi';
 import { FeatureList, list } from '../../lib/features';
+import { Formik, Form, Field, useFormikContext } from 'formik';
+import axios from "axios"
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router'
 
 export default function Login() {
-    let [isLoading, setLoading] = useState("")
-    let [name, setName] = useState("")
+    const { data: session, status } = useSession({
+        required: true,
+        onUnauthenticated() {
+            console.log('/auth/login')
+        }
+    })
+    const router = useRouter()
+    const toast = useToast()
+
+    function validateName(value: string) {
+        let error
+        if (!value && !session?.user?.name) {
+            error = 'Name is required'
+        }
+        return error
+    }
 
     return (
         <>
@@ -50,32 +55,77 @@ export default function Login() {
                     <Stack spacing={4} w={'full'} maxW={'md'}>
                         <Heading fontSize={'3xl'}>We&apos;ll need a few more details</Heading>
                         <Text opacity={0.75}>We&apos;ll need to know your name, which will allow us to generate an avatar for you.</Text>
-                        <HStack pt={6}>
-                            <Tooltip label="Start typing to generate an avatar">
-                                <Avatar src={`/app/api/avatar/${name ? name : "hi"}`} icon={<SkeletonCircle height="full" width="full" />}>
-                                </Avatar>
-                            </Tooltip>
-                            <VStack
-                                display="flex"
-                                alignItems="flex-start"
-                                spacing="1px"
-                                ml="2">
-                                <Tooltip label="Start typing to generate an avatar">
-                                    <Text fontSize="sm">{name ? name : "Start typing"}</Text>
-                                </Tooltip>
-                                <Text fontSize="xs" color="gray.600">
-                                    Admin
-                                </Text>
-                            </VStack>
-                        </HStack>
-                        <FormControl id="name">
-                            <Input required autoComplete='off' type="text" placeholder="What's your name" value={name} onChange={(e) => setName(e.target.value)} />
-                        </FormControl>
-                        <Stack spacing={6}>
-                            <Button colorScheme={'blue'} variant={'solid'}>
-                                Confirm details
-                            </Button>
-                        </Stack>
+                        <Formik
+                            initialValues={{ name: status === "authenticated" && session?.user?.name ? session.user.name : '' }}
+                            onSubmit={(values, actions) => {
+                                setTimeout(() => {
+                                    axios.post("/api/set-user-details", {
+                                        name: values.name,
+                                        image: `/api/avatar/${values.name}`,
+                                        email: session?.user?.email
+                                    }).then(() => {
+                                        router.push('/')
+                                    }).catch((err) => {
+                                        toast({
+                                            title: "An error occured",
+                                            description: "Try again later",
+                                            status: "error"
+                                        })
+                                    })
+                                    actions.setSubmitting(false)
+                                }, 1000)
+                            }}
+                        >
+                            {(props) => (
+                                <>
+                                    <HStack pt={6}>
+                                        <Tooltip label="Start typing to generate an avatar">
+                                            <Avatar src={session?.user?.image && !props.values.name ? session.user.image : `/api/avatar/${props.values.name ? props.values.name : "hi"}`} icon={<SkeletonCircle height="full" width="full" />}>
+                                            </Avatar>
+                                        </Tooltip>
+                                        <VStack
+                                            display="flex"
+                                            alignItems="flex-start"
+                                            spacing="1px"
+                                            ml="2">
+                                            <Tooltip label="Start typing to generate an avatar">
+                                                <Text fontSize="sm">{session?.user?.name && !props.values.name ? session.user.name : props.values.name ? props.values.name : "Start typing"}</Text>
+                                            </Tooltip>
+                                            <Text fontSize="xs" color="gray.600">
+                                                Admin
+                                            </Text>
+                                        </VStack>
+                                    </HStack>
+                                    <Form>
+                                        {session ? <Field name='name' validate={validateName}>
+                                            {({ field, form }: any) => (
+                                                <FormControl isInvalid={form.errors.name && form.touched.name}>
+                                                    <Input {...field} id='name' required autoComplete='off' type="text" placeholder="What's your name" />
+                                                    {form.errors.name && <FormErrorMessage>{form.errors.name}</FormErrorMessage>}
+                                                    {session.user?.name && <FormHelperText>Leave blank to use the name shown above</FormHelperText>}
+                                                </FormControl>
+                                            )}
+                                        </Field> : <Skeleton rounded="base">
+                                            <FormControl>
+                                                <Input id='name' required autoComplete='off' type="text" placeholder="What's your name" />
+                                                <FormErrorMessage>Hi</FormErrorMessage>
+                                            </FormControl>
+                                        </Skeleton>}
+                                        <Button
+                                            mt={4}
+                                            colorScheme={'blue'}
+                                            variant={'solid'}
+                                            isLoading={props.isSubmitting}
+                                            isDisabled={!session}
+                                            type='submit'
+                                            isFullWidth
+                                        >
+                                            Confirm details
+                                        </Button>
+                                    </Form>
+                                </>
+                            )}
+                        </Formik>
                     </Stack>
                 </Flex>
                 <Flex flex={1}>

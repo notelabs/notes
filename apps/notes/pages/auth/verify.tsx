@@ -29,12 +29,12 @@ export default function Verify() {
 
     function signInGithub() {
         setLoading("github")
-        signIn("github", { callbackUrl: "/app" })
+        signIn("github")
     }
 
     function signInEmail(email: string) {
         setLoading("email")
-        signIn("email", { callbackUrl: "/app", email })
+        signIn("email", { email: email })
     }
 
     return (

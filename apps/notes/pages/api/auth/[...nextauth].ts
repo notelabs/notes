@@ -6,10 +6,10 @@ import prisma from "../../../lib/prisma"
 
 export default NextAuth({
   pages: {
-    signIn: '/app/auth/login',
-    error: '/app/auth/error',
-    verifyRequest: '/app/auth/verify',
-    newUser: '/app/auth/set-details'
+    signIn: '/auth/login',
+    error: '/auth/error',
+    verifyRequest: '/auth/verify',
+    newUser: '/auth/set-details'
   },
   secret: process.env.SECRET,
   adapter: PrismaAdapter(prisma),
@@ -17,7 +17,7 @@ export default NextAuth({
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
     }),
     EmailProvider({
       server: process.env.EMAIL_SERVER,

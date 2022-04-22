@@ -22,7 +22,7 @@ import {
 import { Nav } from 'ui';
 import { HiBeaker, HiCollection, HiDeviceMobile, HiDocumentDownload, HiKey, HiLightningBolt, HiPhone } from 'react-icons/hi';
 import { FaGithub } from 'react-icons/fa';
-import { signIn } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
 import { useState } from 'react';
 import Head from 'next/head';
 import { FeatureList, list } from '../../lib/features';
@@ -30,15 +30,22 @@ import { Formik, Form, Field } from 'formik';
 
 export default function Login() {
     let [isLoading, setLoading] = useState("")
+    
+    const { data: session, status } = useSession({
+        required: true,
+        onUnauthenticated() {
+            console.log('/')
+        }
+    })
 
     function signInGithub() {
         setLoading("github")
-        signIn("github", { callbackUrl: "/app" })
+        signIn("github", { callbackUrl: '/' })
     }
 
     function signInEmail(email: string) {
         setLoading("email")
-        signIn("email", { callbackUrl: "/app", email })
+        signIn("email", { email: email, callbackUrl: '/' })
     }
 
     function validateEmail(value: string) {
