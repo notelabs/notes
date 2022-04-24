@@ -1,4 +1,4 @@
-# Turborepo starter
+# Notelabs
 
 This is an official Yarn v1 starter turborepo.
 
