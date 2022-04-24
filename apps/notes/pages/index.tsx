@@ -41,7 +41,7 @@ export default function Notes() {
     <div>
       <Layout>
         <Container maxW="container.lg" mt={6}>
-          <SimpleGrid columns={[1, null, 3]}>
+          <SimpleGrid columns={[1, null, 3]} spacing={4}>
             {data && !error ? data.map((i: { summary: string; title: string; updatedAt: string; }) => (
               <Box p={5} borderWidth="1px" borderRadius={6}>
                 <Box transition="all 0.3s ease" borderRadius={6} boxShadow={shadow} _hover={{ boxShadow: hoverShadow }} p={5} mb={5}>{i.summary}</Box>

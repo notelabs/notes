@@ -12,7 +12,8 @@
     "notes-build": "turbo run build --filter=notes...",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "pgkill": "heroku pg:killall --app notelabs"
   },
   "devDependencies": {
     "prettier": "^2.5.1",
