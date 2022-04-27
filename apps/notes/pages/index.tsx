@@ -1,11 +1,10 @@
-import { Layout, Nav, Sidebar } from "ui";
-import { Box, Button, ButtonGroup, Container, Editable, EditableInput, EditablePreview, Heading, HStack, IconButton, Input, SimpleGrid, Skeleton, SkeletonText, Text, Tooltip, useColorMode, useColorModeValue, useEditableControls } from "@chakra-ui/react"
+import { Layout } from "ui";
+import { Box, ButtonGroup, Container, Editable, EditableInput, EditablePreview, Heading, HStack, IconButton, Input, SimpleGrid, Skeleton, SkeletonText, Text, Tooltip, useColorModeValue, useEditableControls } from "@chakra-ui/react"
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import { useColor } from "hooks"
-import { signIn, useSession } from "next-auth/react"
 import useSWR from "swr";
-import { ReactChild, ReactFragment, ReactPortal } from "react";
 import { formatDistance } from 'date-fns'
+import NextLink from 'next/link'
 
 export default function Notes() {
   let shadow = useColorModeValue("xs", "")
@@ -57,17 +56,21 @@ export default function Notes() {
       <Layout>
         <Container maxW="container.lg" mt={6}>
           <SimpleGrid columns={[1, null, 3]} spacing={4}>
-            {data && !error ? data.map((i: { summary: string; title: string; updatedAt: string; }) => (
+            {data && !error ? data.map((i: { summary: string; title: string; updatedAt: string; id: string; }) => (
               <Box p={5} borderWidth="1px" borderRadius={6}>
-                <Box transition="all 0.3s ease" borderRadius={6} boxShadow={shadow} _hover={{ boxShadow: hoverShadow }} p={5} mb={5}>{i.summary}</Box>
+                <NextLink href={`/document/${encodeURIComponent(i.id)}`}>
+                  <Box cursor="pointer" transition="all 0.3s ease" borderRadius={6} boxShadow={shadow} _hover={{ boxShadow: hoverShadow }} p={5} mb={5}>{i.summary}</Box>
+                </NextLink>
                 <Editable
                   defaultValue={i.title}
                   isPreviewFocusable={false}
                   selectAllOnFocus={false}
                 >
                   <RightClickEdit>
-                    <Tooltip label="Right click to edit">
-                      <Heading py={2} mt={1} as={EditablePreview} size="sm" />
+                    <Tooltip shouldWrapChildren label="Right click to edit">
+                      <NextLink href={`/document/${encodeURIComponent(i.id)}`}>
+                        <Heading cursor="pointer" py={2} mt={1} as={EditablePreview} size="sm" />
+                      </NextLink>
                     </Tooltip>
                   </RightClickEdit>
                   <HStack>
