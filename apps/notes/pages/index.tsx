@@ -36,6 +36,21 @@ export default function Notes() {
     ) : null;
   }
 
+  function RightClickEdit({ children }: any) {
+    const { getEditButtonProps } = useEditableControls()
+    const btn = getEditButtonProps()
+
+    return (
+      <Box onContextMenu={(e) => {
+        e.preventDefault()
+        // @ts-ignore
+        btn.onClick()
+      }}>
+        {children}
+      </Box>
+    )
+  }
+
 
   return (
     <div>
@@ -47,12 +62,14 @@ export default function Notes() {
                 <Box transition="all 0.3s ease" borderRadius={6} boxShadow={shadow} _hover={{ boxShadow: hoverShadow }} p={5} mb={5}>{i.summary}</Box>
                 <Editable
                   defaultValue={i.title}
-                  isPreviewFocusable={true}
+                  isPreviewFocusable={false}
                   selectAllOnFocus={false}
                 >
-                  <Tooltip label="Click to edit">
-                    <Heading py={2} mt={1} as={EditablePreview} size="sm" />
-                  </Tooltip>
+                  <RightClickEdit>
+                    <Tooltip label="Right click to edit">
+                      <Heading py={2} mt={1} as={EditablePreview} size="sm" />
+                    </Tooltip>
+                  </RightClickEdit>
                   <HStack>
                     <Input pt={2.5} mb={0.5} size="md" variant="unstyled" fontWeight="bold" _focus={{ boxShadow: "none" }} fontFamily="Cal Sans, sans-serif" as={EditableInput} />
                     <EditableControls />
@@ -72,12 +89,14 @@ export default function Notes() {
                 <SkeletonText>
                   <Editable
                     defaultValue="Document"
-                    isPreviewFocusable={true}
+                    isPreviewFocusable={false}
                     selectAllOnFocus={false}
                   >
-                    <Tooltip label="Click to edit">
-                      <Heading py={2} mt={1} as={EditablePreview} size="sm" />
-                    </Tooltip>
+                    <RightClickEdit>
+                      <Tooltip label="Right click to edit">
+                        <Heading py={2} mt={1} as={EditablePreview} size="sm" />
+                      </Tooltip>
+                    </RightClickEdit>
                     <HStack>
                       <Input pt={2.5} mb={0.5} size="md" variant="unstyled" fontWeight="bold" _focus={{ boxShadow: "none" }} fontFamily="Cal Sans, sans-serif" as={EditableInput} />
                       <EditableControls />
