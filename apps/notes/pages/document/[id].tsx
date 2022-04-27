@@ -7,15 +7,14 @@ import NextLink from 'next/link'
 import { useColor } from 'hooks'
 import { HiPencil } from 'react-icons/hi'
 import axios from 'axios'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useAutosave } from 'react-autosave'
 
 export default function Doc({ data }: any) {
     const secondaryColor = useColor({ color: "secondary" })
     const [input, setInput] = useState(data.content)
-    const save = () => axios.post('/api/document/update', { id: data.id, content: input });
+    const save = useCallback(() => axios.post('/api/document/update', { id: data.id, content: input }), [])
     useAutosave({ data: input, onSave: save });
-    console.log(data.id)
 
     return <Container maxW="container.md">
         <Box display="flex" justifyContent="space-between" as="nav" my={6}>
