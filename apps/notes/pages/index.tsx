@@ -67,7 +67,7 @@ export default function Notes() {
                   selectAllOnFocus={false}
                 >
                   <RightClickEdit>
-                    <Tooltip shouldWrapChildren label="Right click to edit">
+                    <Tooltip shouldWrapChildren label="Right click to rename">
                       <NextLink href={`/document/${encodeURIComponent(i.id)}`}>
                         <Heading cursor="pointer" py={2} mt={1} as={EditablePreview} size="sm" />
                       </NextLink>
@@ -96,7 +96,7 @@ export default function Notes() {
                     selectAllOnFocus={false}
                   >
                     <RightClickEdit>
-                      <Tooltip label="Right click to edit">
+                      <Tooltip label="Right click to rename">
                         <Heading py={2} mt={1} as={EditablePreview} size="sm" />
                       </Tooltip>
                     </RightClickEdit>

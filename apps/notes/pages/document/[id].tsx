@@ -1,9 +1,36 @@
+import { ArrowBackIcon, EditIcon } from '@chakra-ui/icons'
+import { Box, Container, Heading, HStack, Text, IconButton, Textarea, ButtonGroup, Button } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
 import prisma from '../../lib/prisma'
+import NextLink from 'next/link'
+import { useColor } from 'hooks'
+import { HiPencil } from 'react-icons/hi'
 
 export default function Doc({ data }: any) {
-    return <p>Post: {data.title}</p>
+    const secondaryColor = useColor({ color: "secondary" })
+
+    return <Container maxW="container.md">
+        <Box display="flex" justifyContent="space-between" as="nav" my={6}>
+            <HStack>
+                <NextLink href="/">
+                    <IconButton aria-label='Go home' variant="ghost" icon={<ArrowBackIcon />} />
+                </NextLink>
+            </HStack>
+            <ButtonGroup>
+                <IconButton aria-label='Update details' variant="ghost" icon={<HiPencil />} />
+                <Button colorScheme="blue">Share</Button>
+            </ButtonGroup>
+        </Box>
+        <Box py={6}>
+            <Heading pb={4}>{data.title}</Heading>
+            <Textarea minH="70vh" defaultValue={data.content} variant="flushed" />
+        </Box>
+        <Box display="flex" justifyContent="space-between">
+            <Text fontSize="sm" color={secondaryColor}>Document id is <code>{data.id}</code>.</Text>
+            <Text fontSize="sm" color={secondaryColor}>Notelabs is in beta.</Text>
+        </Box>
+    </Container>
 }
 
 
