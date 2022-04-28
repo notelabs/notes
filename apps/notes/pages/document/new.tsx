@@ -2,7 +2,7 @@ import { ArrowBackIcon } from '@chakra-ui/icons'
 import { Box, Container, Heading, HStack, Text, IconButton, Textarea, ButtonGroup, Button, Input, useDisclosure, AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay } from '@chakra-ui/react'
 import { useColor } from 'hooks'
 import { HiPencil } from 'react-icons/hi'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Head from 'next/head'
 import NextLink from "next/link"
 
@@ -13,6 +13,35 @@ export default function Doc() {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = useRef()
+
+    useEffect(() => {
+        function handler(e: any) {
+            var confirmationMessage = 'It looks like you have been editing something. ' + 'If you leave before saving, your changes will be lost.';
+            (e || window.event).returnValue = confirmationMessage;
+        }
+
+        function popHandler(e: any) {
+            onOpen()
+        }
+
+        window.addEventListener("beforeunload", handler);
+        window.addEventListener("popstate", popHandler);
+
+        history.pushState(null, document.title, location.href);
+        window.addEventListener('popstate', function (event) {
+            history.pushState(null, document.title, location.href);
+        });
+
+
+        return () => {
+            window.removeEventListener("beforeunload", handler);
+            window.removeEventListener("popstate", popHandler);
+            window.removeEventListener('popstate', function (event) {
+                history.pushState(null, document.title, location.href);
+            })
+        }
+    })
+
 
     return <>
         <Head>
