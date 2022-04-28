@@ -7,6 +7,7 @@ import { formatDistance } from 'date-fns'
 import NextLink from 'next/link'
 import axios from "axios";
 import styles from "../styles/animate.module.css"
+import AddButton from "../components/AddButton";
 
 export default function Notes() {
   let shadow = useColorModeValue("xs", "")
@@ -62,7 +63,7 @@ export default function Notes() {
           <SimpleGrid columns={[1, null, 3]} spacing={4}>
             {data && !error ? data.map((i: { summary: string; title: string; updatedAt: string; id: string; }) => (
               <>
-                <Box p={5} borderWidth="1px" borderRadius={6}>
+                <Box p={5} borderWidth="1px" borderRadius={6} key={i.id}>
                   <NextLink href={`/document/${encodeURIComponent(i.id)}`}>
                     <Box cursor="pointer" transition="all 0.3s ease" borderRadius={6} boxShadow={shadow} _hover={{ boxShadow: hoverShadow }} p={5} mb={5}>{i.summary}</Box>
                   </NextLink>
@@ -103,10 +104,7 @@ export default function Notes() {
                     { addSuffix: true }
                   )}</Text>
                 </Box>
-                <Box className={styles.border} p={5} borderRadius={6} display="flex" justifyContent="center" alignItems="center" flexDirection="column" gap={4} cursor="pointer">
-                  <AddIcon boxSize={8} opacity={0.5} />
-                  <Text opacity={0.6}>New document</Text>
-                </Box>
+                <AddButton />
               </>
             )) : error ? "An error occured" : [...Array(5).keys()].map((i) => (
               <Box p={5} borderWidth="1px" borderRadius={6} key={i}>
