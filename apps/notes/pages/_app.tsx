@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app'
 import { theme } from "config"
 import "cal-sans"
 import { SessionProvider } from 'next-auth/react'
+import '../styles/globals.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
