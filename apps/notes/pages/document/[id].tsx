@@ -80,7 +80,6 @@ export default function Doc({ data }: any) {
                     defaultValue={data.title}
                     isPreviewFocusable={false}
                     selectAllOnFocus={false}
-                    startWithEditView
                     onSubmit={(nextValue: string) => {
                         axios.post('/api/document/update/title', { id: data.id, title: nextValue }).then(() => {
                             toast({
