@@ -1,18 +1,23 @@
 import { ArrowBackIcon } from '@chakra-ui/icons'
-import { Box, Container, Heading, HStack, Text, IconButton, Textarea, ButtonGroup, Button, Input, useDisclosure, AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay } from '@chakra-ui/react'
+import { Box, Container, Heading, HStack, Text, IconButton, Textarea, ButtonGroup, Button, Input, useDisclosure, AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, useToast } from '@chakra-ui/react'
 import { useColor } from 'hooks'
 import { HiPencil } from 'react-icons/hi'
 import { useEffect, useRef, useState } from 'react'
 import Head from 'next/head'
 import NextLink from "next/link"
+import axios from 'axios'
+import { useRouter } from 'next/router'
 
 export default function Doc() {
     const secondaryColor = useColor({ color: "secondary" })
     const [input, setInput] = useState('')
     const [title, setTitle] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = useRef()
+    const toast = useToast()
+    const router = useRouter()
 
     useEffect(() => {
         function handler(e: any) {
@@ -42,6 +47,23 @@ export default function Doc() {
         }
     })
 
+    function create () {
+        setIsLoading(true)
+        axios.post('/api/document/create', { title: title, content: input }).then((data) => {
+            toast({
+              status: "success",
+              title: "Document created successfully"
+            })
+            router.replace(`/document/${data.data.id}`)
+          }).catch(() => {
+            toast({
+              status: "error",
+              title: "An error occured creating your document"
+            })
+            setIsLoading(false)
+          })
+    }
+
 
     return <>
         <Head>
@@ -50,7 +72,7 @@ export default function Doc() {
         <Container maxW="container.md">
             <Box display="flex" justifyContent="space-between" as="nav" my={6}>
                 <HStack>
-                    <IconButton onClick={onOpen} aria-label='Go home' variant="ghost" icon={<ArrowBackIcon />} />
+                    <IconButton onClick={onOpen} isDisabled={isLoading} aria-label='Go home' variant="ghost" icon={<ArrowBackIcon />} />
                     <AlertDialog
                         isOpen={isOpen}
                         // @ts-ignore
@@ -84,13 +106,12 @@ export default function Doc() {
 
                 </HStack>
                 <ButtonGroup>
-                    <IconButton aria-label='Update details' variant="ghost" icon={<HiPencil />} />
-                    <Button colorScheme="blue">Create</Button>
+                    <Button colorScheme="blue" isLoading={isLoading} onClick={create}>Create</Button>
                 </ButtonGroup>
             </Box>
             <Box py={6}>
-                <Input value={title} onChange={(e) => setTitle(e.target.value)} pt={2} mb={1.5} size="lg" placeholder='Give me a name' fontSize="4xl" variant="unstyled" fontWeight="bold" _focus={{ boxShadow: "none" }} fontFamily="Cal Sans, sans-serif" />
-                <Textarea placeholder='Now write something brilliant...' minH="70vh" value={input} onChange={(e) => setInput(e.target.value)} variant="flushed" />
+                <Input isDisabled={isLoading} value={title} onChange={(e) => setTitle(e.target.value)} pt={2} mb={1.5} size="lg" placeholder='Give me a name' fontSize="4xl" variant="unstyled" fontWeight="bold" _focus={{ boxShadow: "none" }} fontFamily="Cal Sans, sans-serif" />
+                <Textarea isDisabled={isLoading} placeholder='Now write something brilliant...' minH="70vh" value={input} onChange={(e) => setInput(e.target.value)} variant="flushed" />
             </Box>
             <Box display="flex" justifyContent="space-between">
                 <Text fontSize="sm" color={secondaryColor}>Document id is unavailable on <code>/new</code>.</Text>

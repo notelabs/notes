@@ -16,7 +16,7 @@ export default function Notes() {
 
   // @ts-ignore
   const fetcher = (...args) => fetch(...args).then(res => res.json())
-  const { data, error } = useSWR('/api/document/all', fetcher)
+  const { data, error } = useSWR('/api/document/all', fetcher, { refreshInterval: 2000 })
   const toast = useToast()
   const { mutate } = useSWRConfig()
 
@@ -62,7 +62,6 @@ export default function Notes() {
         <Container maxW="container.lg" mt={6}>
           <SimpleGrid columns={[1, null, 3]} spacing={4}>
             {data && !error ? data.map((i: { summary: string; title: string; updatedAt: string; id: string; }) => (
-              <>
                 <Box p={5} borderWidth="1px" borderRadius={6} key={i.id}>
                   <NextLink href={`/document/${encodeURIComponent(i.id)}`}>
                     <Box cursor="pointer" transition="all 0.3s ease" borderRadius={6} boxShadow={shadow} _hover={{ boxShadow: hoverShadow }} p={5} mb={5}>{i.summary}</Box>
@@ -104,8 +103,6 @@ export default function Notes() {
                     { addSuffix: true }
                   )}</Text>
                 </Box>
-                <AddButton />
-              </>
             )) : error ? "An error occured" : [...Array(5).keys()].map((i) => (
               <Box p={5} borderWidth="1px" borderRadius={6} key={i}>
                 <Skeleton>
@@ -130,6 +127,7 @@ export default function Notes() {
                 </SkeletonText>
               </Box>
             ))}
+            {data && !error && <AddButton />}
           </SimpleGrid>
         </Container>
       </Layout>
