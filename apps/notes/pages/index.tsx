@@ -1,10 +1,11 @@
 import { Layout } from "ui";
-import { Box, ButtonGroup, Container, Editable, EditableInput, EditablePreview, Heading, HStack, IconButton, Input, SimpleGrid, Skeleton, SkeletonText, Text, Tooltip, useColorModeValue, useEditableControls } from "@chakra-ui/react"
+import { Box, ButtonGroup, Container, Editable, EditableInput, EditablePreview, Heading, HStack, IconButton, Input, SimpleGrid, Skeleton, SkeletonText, Text, Tooltip, useColorModeValue, useEditableControls, useToast } from "@chakra-ui/react"
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import { useColor } from "hooks"
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import { formatDistance } from 'date-fns'
 import NextLink from 'next/link'
+import axios from "axios";
 
 export default function Notes() {
   let shadow = useColorModeValue("xs", "")
@@ -14,6 +15,8 @@ export default function Notes() {
   // @ts-ignore
   const fetcher = (...args) => fetch(...args).then(res => res.json())
   const { data, error } = useSWR('/api/document/all', fetcher)
+  const toast = useToast()
+  const { mutate } = useSWRConfig()
 
   function EditableControls() {
     const {
@@ -65,6 +68,20 @@ export default function Notes() {
                   defaultValue={i.title}
                   isPreviewFocusable={false}
                   selectAllOnFocus={false}
+                  onSubmit={(nextValue: string) => {
+                    axios.post('/api/document/update/title', { id: i.id, title: nextValue }).then(() => {
+                      toast({
+                        status: "success",
+                        title: "Document renamed successfully"
+                      })
+                    }).catch(() => {
+                      toast({
+                        status: "error",
+                        title: "An error occured renaming your document"
+                      })
+                    })
+                    mutate('/api/document/all');
+                  }}
                 >
                   <RightClickEdit>
                     <Tooltip shouldWrapChildren label="Right click to rename">
