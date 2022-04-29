@@ -21,6 +21,7 @@ import {
 import { HamburgerIcon, CloseIcon, SunIcon, MoonIcon } from '@chakra-ui/icons';
 import { Fade } from '.';
 import Head from "next/head"
+import useSWR from "swr"
 
 type NavProps = {
     links?: NavLinkProps[]
@@ -57,6 +58,10 @@ export function MarketingNav({ links, delay }: MarketingNavProps) {
 
     links ??= []
 
+    // @ts-ignore
+    const fetcher = (...args) => fetch(...args).then(res => res.json())
+    const { data, error } = useSWR('https://notelabs-app.vercel.app/api/auth/session', fetcher)
+
     return (
         <Fade delay={delay ? delay : 1.6}>
             <Container maxW="container.lg" px={4}>
@@ -90,9 +95,10 @@ export function MarketingNav({ links, delay }: MarketingNavProps) {
                                 minW={0}>
                                 <Avatar
                                     size={'sm'}
+                                    src={data ? `https://notelabs-app.vercel.app${data.user.image}` : undefined}
                                 />
                             </MenuButton>
-                            <MenuList>
+                            <MenuList>          
                                 <MenuItem>Link 1</MenuItem>
                                 <MenuItem>Link 2</MenuItem>
                                 <MenuDivider />
