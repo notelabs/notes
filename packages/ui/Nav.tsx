@@ -60,7 +60,7 @@ export function MarketingNav({ links, delay }: MarketingNavProps) {
 
     // @ts-ignore
     const fetcher = (...args) => fetch(...args).then(res => res.json())
-    const { data, error } = useSWR('https://notelabs-app.vercel.app/api/auth/session', fetcher)
+    const { data, error } = useSWR('https://app.notelabs.me/api/auth/session', fetcher)
 
     return (
         <Fade delay={delay ? delay : 1.6}>
@@ -95,7 +95,7 @@ export function MarketingNav({ links, delay }: MarketingNavProps) {
                                 minW={0}>
                                 <Avatar
                                     size={'sm'}
-                                    src={data ? `https://notelabs-app.vercel.app${data.user.image}` : undefined}
+                                    src={data ? `https://app.notelabs.me${data.user.image}` : undefined}
                                 />
                             </MenuButton>
                             <MenuList>          

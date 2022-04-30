@@ -6,4 +6,12 @@ const withTM = require("next-transpile-modules")(["ui", "hooks"]);
  **/
 module.exports = withTM({
   reactStrictMode: true,
+  async rewrites() {
+    return [
+      {
+        source: '/api/auth/session',
+        destination: 'https://app.notelabs.me/api/auth/session',
+      },
+    ]
+  },
 });
