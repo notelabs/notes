@@ -7,11 +7,20 @@ import { NextApiRequest, NextApiResponse } from "next";
 import initMiddleware from "../../../lib/init-middleware";
 import Cors from 'cors'
 
+const allowedOrigins = ['https://notelabs.me', 'https://app.notelabs.me']
+
 // Initialize the cors middleware
 const cors = initMiddleware(
   // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
   Cors({
-    origin: /(.+\.notelabs\.me)|(^notelabs\.me)/gm
+    origin: function (origin, callback) {
+      // @ts-ignore
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true)
+      } else {
+        callback(new Error('Not allowed by CORS'))
+      }
+    }
   })
 )
 
