@@ -60,7 +60,7 @@ export function MarketingNav({ links, delay }: MarketingNavProps) {
 
     // @ts-ignore
     const fetcher = (...args) => fetch(...args).then(res => res.json())
-    const { data, error } = useSWR('https://app.notelabs.me/api/auth/session', fetcher)
+    const { data, error } = useSWR('/api/auth/session', fetcher)
 
     return (
         <Fade delay={delay ? delay : 1.6}>
