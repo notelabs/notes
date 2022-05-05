@@ -16,12 +16,14 @@ import {
     Stack,
     useColorMode,
     Heading,
-    Container
+    Container,
+    Tooltip
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon, SunIcon, MoonIcon } from '@chakra-ui/icons';
 import { Fade } from '.';
 import Head from "next/head"
 import useSWR from "swr"
+import { IoApps, IoSunny, IoMoon, IoEllipsisVertical } from "react-icons/io5"
 
 type NavProps = {
     links?: NavLinkProps[]
@@ -64,7 +66,7 @@ export function MarketingNav({ links, delay }: MarketingNavProps) {
 
     return (
         <Fade delay={delay ? delay : 1.6}>
-            <Container maxW="container.lg" px={4}>
+            <Container maxW="container.lg" px={4} py={4}>
                 <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
                     <IconButton
                         size={'md'}
@@ -84,20 +86,21 @@ export function MarketingNav({ links, delay }: MarketingNavProps) {
                             ))}
                         </HStack>
                     </HStack>
-                    <HStack alignItems={'center'} spacing={4}>
-                        <IconButton variant="ghost" rounded="full" aria-label='Toggle theme' onClick={toggleColorMode} icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />} />
+                    <HStack alignItems={'center'} spacing={2}>
+                        <Tooltip label="Toggle theme">
+                            <IconButton variant="ghost" rounded="full" aria-label='Toggle theme' onClick={toggleColorMode} icon={colorMode === "light" ? <IoMoon /> : <IoSunny />} />
+                        </Tooltip>
                         <Menu>
+                        <Tooltip label="Menu">
                             <MenuButton
-                                as={Button}
+                                as={IconButton}
+                                icon={<IoEllipsisVertical />}
                                 rounded={'full'}
-                                variant={'link'}
+                                variant={'ghost'}
                                 cursor={'pointer'}
-                                minW={0}>
-                                <Avatar
-                                    size={'sm'}
-                                    src={data ? `https://app.notelabs.me${data.user.image}` : undefined}
-                                />
+                                >
                             </MenuButton>
+                            </Tooltip>
                             <MenuList>          
                                 <MenuItem>Link 1</MenuItem>
                                 <MenuItem>Link 2</MenuItem>

@@ -12,6 +12,8 @@ import {
 } from '@chakra-ui/react';
 import { FadeAndSlide } from '.';
 import Link from "next/link"
+import { motion } from 'framer-motion';
+import { IoArrowForward, IoChevronForward } from 'react-icons/io5';
 
 type HeroProps = {
     heading: string
@@ -52,6 +54,7 @@ export function Hero({ heading, description, mainLink }: HeroProps) {
                                     colorScheme="blue"
                                     rounded={'full'}
                                     px={6}
+                                    rightIcon={<IoArrowForward />}
                                 >
                                     Get Started
                                 </Button>
