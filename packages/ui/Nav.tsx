@@ -33,6 +33,7 @@ type NavProps = {
 type MarketingNavProps = {
     links?: NavLinkProps[]
     delay?: number
+    appUrl?: string
 }
 
 type NavLinkProps = {
@@ -54,15 +55,11 @@ const NavLink = ({ name, href }: NavLinkProps) => (
     </Link>
 );
 
-export function MarketingNav({ links, delay }: MarketingNavProps) {
+export function MarketingNav({ links, delay, appUrl }: MarketingNavProps) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { colorMode, toggleColorMode } = useColorMode()
 
     links ??= []
-
-    // @ts-ignore
-    const fetcher = (...args) => fetch(...args).then(res => res.json())
-    const { data, error } = useSWR('http://localhost:3000/api/external-session', fetcher)
 
     return (
         <Fade delay={delay ? delay : 1.6}>
@@ -91,19 +88,20 @@ export function MarketingNav({ links, delay }: MarketingNavProps) {
                             <IconButton variant="ghost" rounded="full" aria-label='Toggle theme' onClick={toggleColorMode} icon={colorMode === "light" ? <IoMoon /> : <IoSunny />} />
                         </Tooltip>
                         <Menu>
-                        <Tooltip label="Menu">
-                            <MenuButton
-                                as={IconButton}
-                                icon={<IoEllipsisVertical />}
-                                rounded={'full'}
-                                variant={'ghost'}
-                                cursor={'pointer'}
+                            <Tooltip label="Menu">
+                                <MenuButton
+                                    as={IconButton}
+                                    icon={<IoEllipsisVertical />}
+                                    rounded={'full'}
+                                    variant={'ghost'}
+                                    cursor={'pointer'}
                                 >
-                            </MenuButton>
+                                </MenuButton>
                             </Tooltip>
-                            <MenuList>          
-                                <MenuItem>Link 1</MenuItem>
-                                <MenuItem>Link 2</MenuItem>
+                            <MenuList>
+                                <Link href={appUrl}>
+                                    <MenuItem>Go to app</MenuItem>
+                                </Link>
                                 <MenuDivider />
                                 <MenuItem>Link 3</MenuItem>
                             </MenuList>
@@ -136,9 +134,9 @@ export function Nav({ links, title }: NavProps) {
 
     return (
         <>
-        <Head>
-            <title>{title === "Notelabs" ? title : `${title} - Notelabs`}</title>
-        </Head>
+            <Head>
+                <title>{title === "Notelabs" ? title : `${title} - Notelabs`}</title>
+            </Head>
             <Container maxW="container.lg" px={4}>
                 <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
                     <IconButton
