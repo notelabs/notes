@@ -18,6 +18,7 @@ import {
     FormErrorMessage,
     FormHelperText,
     Spacer,
+    Box,
 } from '@chakra-ui/react';
 import { Nav } from 'ui';
 import { HiBeaker, HiCollection, HiDeviceMobile, HiDocumentDownload, HiKey, HiLightningBolt, HiPhone } from 'react-icons/hi';
@@ -27,10 +28,12 @@ import { useState } from 'react';
 import Head from 'next/head';
 import { FeatureList, list } from '../../lib/features';
 import { Formik, Form, Field } from 'formik';
+import { IoArrowBack } from 'react-icons/io5';
+import NextLink from "next/link"
 
 export default function Login() {
     let [isLoading, setLoading] = useState("")
-    
+
     const { data: session, status } = useSession({
         required: true,
         onUnauthenticated() {
@@ -69,7 +72,14 @@ export default function Login() {
             <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
                 <Flex p={8} flex={1} align={'center'} justify={'center'}>
                     <Stack spacing={4} w={'full'} maxW={'md'}>
-                        <Heading fontSize={'3xl'}>Sign in or sign up</Heading>
+                        <Box pos="absolute" top={8}>
+                            <NextLink href="/">
+                                <Button leftIcon={<IoArrowBack />} width="fit-content" size="sm" variant="ghost">
+                                    Go home
+                                </Button>
+                            </NextLink>
+                        </Box>
+                        <Heading fontSize={'3xl'} pt={{ base: 8, md: 0 }}>Sign in or sign up</Heading>
                         <Text opacity={0.75}>Enter your email to sign in with a magic link, or sign in with a provider.</Text>
                         <Spacer />
                         <Formik
