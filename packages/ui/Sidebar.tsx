@@ -133,10 +133,10 @@ const SidebarContent = ({ onClose, title, linkItems, selectedName, ...rest }: Si
                     <Divider my={4} />
                     <ButtonGroup size="sm" variant="ghost" justifyContent="space-between" w="full">
                         <Box>
-                            <Link href="https://github.com/notelabs">
+                            <Link href="https://github.com/notelabs" tabIndex={-1}>
                                 <IconButton aria-label='GitHub' icon={<Icon as={RiGithubFill} />} />
                             </Link>
-                            <Link href="https://twitter.com/trynotelabs">
+                            <Link href="https://twitter.com/trynotelabs" tabIndex={-1}>
                                 <IconButton aria-label='Twitter' icon={<Icon as={RiTwitterFill} />} />
                             </Link>
                         </Box>
@@ -161,8 +161,8 @@ const NavItem = ({ icon, children, href, selected, ...rest }: NavItemProps) => {
     const hover = useColor({ color: "hover" })
 
     return (
-        <Link style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
-            <NextLink href={href}>
+        <NextLink passHref href={href}>
+            <Link role="group" style={{ textDecoration: 'none' }} _focus={{ outline: "none" }} borderRadius="lg" tabIndex={0}>
                 <Flex
                     align="center"
                     p="2"
@@ -177,6 +177,7 @@ const NavItem = ({ icon, children, href, selected, ...rest }: NavItemProps) => {
                     _hover={{
                         background: selected ? selectedHover : hover
                     }}
+                    _groupFocus={{ boxShadow: "outline" }}
                     {...rest}>
                     {icon && (
                         <Icon
@@ -187,8 +188,8 @@ const NavItem = ({ icon, children, href, selected, ...rest }: NavItemProps) => {
                     )}
                     {children}
                 </Flex>
-            </NextLink>
-        </Link>
+            </Link>
+        </NextLink>
     );
 };
 
@@ -235,9 +236,11 @@ const MobileNav = ({ onOpen, title, ...rest }: MobileProps) => {
                 <Flex alignItems={'center'}>
                     <Menu>
                         <MenuButton
-                            py={2}
+                            p={2}
                             transition="all 0.3s"
-                            _focus={{ boxShadow: 'none' }}>
+                            borderRadius={6}
+                            _focus={{ boxShadow: "outline" }}
+                        >
                             <HStack>
                                 <SkeletonCircle isLoaded={status !== "loading"}>
                                     <Avatar
