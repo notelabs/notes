@@ -7,6 +7,7 @@ type LayoutProps = {
     children: ReactNode
     title?: string
     links?: LinkItemProps[]
+    selectedName?: string
 }
 
 const DefaultLinkItems: LinkItemProps[] = [
@@ -17,7 +18,7 @@ const DefaultLinkItems: LinkItemProps[] = [
     { name: 'Settings', icon: FiSettings, href: '/' },
 ];
 
-export function Layout ({ children, title }: LayoutProps) {
+export function Layout ({ children, title, selectedName }: LayoutProps) {
     title ??= "Notelabs"
 
     return (
@@ -25,7 +26,7 @@ export function Layout ({ children, title }: LayoutProps) {
             <Head>
                 <title>{title === "Notelabs" ? title : `${title} - Notelabs`}</title>
             </Head>
-            <Sidebar title={title} links={DefaultLinkItems}>
+            <Sidebar title={title} links={DefaultLinkItems} selectedName={selectedName}>
                 {children}
             </Sidebar>
         </>

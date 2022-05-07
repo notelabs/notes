@@ -40,12 +40,14 @@ import { IconType } from 'react-icons';
 import { ReactText } from 'react';
 import { useColor } from "hooks";
 import { useSession, signIn, signOut } from "next-auth/react"
+import NextLink from "next/link"
 
 
 type SidenavProps = {
     links: LinkItemProps[]
     title?: string
     children: ReactNode
+    selectedName?: string
 }
 
 export interface LinkItemProps {
@@ -57,7 +59,8 @@ export interface LinkItemProps {
 export function Sidebar({
     children,
     title,
-    links
+    links,
+    selectedName
 }: SidenavProps) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     title ??= "Notelabs"
@@ -69,6 +72,7 @@ export function Sidebar({
                 linkItems={links}
                 onClose={() => onClose}
                 display={{ base: 'none', md: 'block' }}
+                selectedName={selectedName}
             />
             <Drawer
                 autoFocus={false}
@@ -79,7 +83,7 @@ export function Sidebar({
                 onOverlayClick={onClose}
                 size="full">
                 <DrawerContent>
-                    <SidebarContent linkItems={links} title={title} onClose={onClose} />
+                    <SidebarContent linkItems={links} title={title} onClose={onClose} selectedName={selectedName} />
                 </DrawerContent>
             </Drawer>
             {/* mobilenav */}
@@ -95,9 +99,10 @@ interface SidebarProps extends BoxProps {
     onClose: () => void;
     title: string
     linkItems: LinkItemProps[]
+    selectedName?: string
 }
 
-const SidebarContent = ({ onClose, title, linkItems, ...rest }: SidebarProps) => {
+const SidebarContent = ({ onClose, title, linkItems, selectedName, ...rest }: SidebarProps) => {
     const { colorMode, toggleColorMode } = useColorMode()
     return (
         <Box
@@ -117,7 +122,7 @@ const SidebarContent = ({ onClose, title, linkItems, ...rest }: SidebarProps) =>
             <Grid h="91vh" templateColumns="auto" gridTemplateRows="auto auto auto">
                 <Box>
                     {linkItems.map((link) => (
-                        <NavItem key={link.name} href={link.href} icon={link.icon}>
+                        <NavItem key={link.name} href={link.href} icon={link.icon} selected={selectedName === link.name ? true : false}>
                             {link.name}
                         </NavItem>
                     ))}
@@ -147,34 +152,42 @@ interface NavItemProps extends FlexProps {
     icon: IconType;
     children: ReactText;
     href: string
+    selected?: boolean
 }
-const NavItem = ({ icon, children, href, ...rest }: NavItemProps) => {
-    const secondary = useColor({ color: "secondary" })
+const NavItem = ({ icon, children, href, selected, ...rest }: NavItemProps) => {
+    const selectedBg = useColor({ color: "selectedBg" })
+    const selectedHover = useColor({ color: "selectedHover" })
+    const selectedColor = useColor({ color: "selected" })
     const hover = useColor({ color: "hover" })
+
     return (
-        <Link href={href} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
-            <Flex
-                align="center"
-                p="2"
-                mx="4"
-                borderRadius="lg"
-                role="group"
-                cursor="pointer"
-                opacity={0.75}
-                _hover={{
-                    opacity: 1,
-                    background: hover
-                }}
-                {...rest}>
-                {icon && (
-                    <Icon
-                        mr="4"
-                        fontSize="16"
-                        as={icon}
-                    />
-                )}
-                {children}
-            </Flex>
+        <Link style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
+            <NextLink href={href}>
+                <Flex
+                    align="center"
+                    p="2"
+                    mx="4"
+                    px={3}
+                    my={1}
+                    borderRadius="lg"
+                    role="group"
+                    cursor="pointer"
+                    bg={selected ? selectedBg : undefined}
+                    color={selected ? selectedColor : undefined}
+                    _hover={{
+                        background: selected ? selectedHover : hover
+                    }}
+                    {...rest}>
+                    {icon && (
+                        <Icon
+                            mr="4"
+                            fontSize="16"
+                            as={icon}
+                        />
+                    )}
+                    {children}
+                </Flex>
+            </NextLink>
         </Link>
     );
 };
@@ -255,7 +268,7 @@ const MobileNav = ({ onOpen, title, ...rest }: MobileProps) => {
                         <MenuList
                             bg={useColorModeValue('white', 'gray.900')}
                             borderColor={useColorModeValue('gray.200', 'gray.700')}
-                            >
+                        >
                             <Box hidden={status !== "authenticated"}>
                                 <Link style={{ textDecoration: 'none' }} href='/auth/set-details'>
                                     <MenuItem>Profile</MenuItem>
