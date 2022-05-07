@@ -17,13 +17,15 @@ import {
     useColorMode,
     Heading,
     Container,
-    Tooltip
+    Tooltip,
+    MenuGroup
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon, SunIcon, MoonIcon } from '@chakra-ui/icons';
 import { Fade } from '.';
 import Head from "next/head"
-import useSWR from "swr"
 import { IoApps, IoSunny, IoMoon, IoEllipsisVertical } from "react-icons/io5"
+import NextLink from "next/link"
+import { FiExternalLink } from 'react-icons/fi';
 
 type NavProps = {
     links?: NavLinkProps[]
@@ -99,11 +101,29 @@ export function MarketingNav({ links, delay, appUrl }: MarketingNavProps) {
                                 </MenuButton>
                             </Tooltip>
                             <MenuList>
-                                <Link href={appUrl}>
-                                    <MenuItem>Go to app</MenuItem>
-                                </Link>
+                                <MenuGroup title='General'>
+                                    <NextLink href={appUrl || "#"}>
+                                        <MenuItem>Go to app</MenuItem>
+                                    </NextLink>
+                                    <Link target="_blank" href="https://buymeacoffee.com/jem">
+                                        <MenuItem display="flex" justifyContent="space-between">
+                                            Support creator <FiExternalLink />
+                                        </MenuItem>
+                                    </Link>
+                                </MenuGroup>
                                 <MenuDivider />
-                                <MenuItem>Link 3</MenuItem>
+                                <MenuGroup title='Social'>
+                                    <Link target="_blank" href="https://twitter.com/trynotelabs">
+                                        <MenuItem display="flex" justifyContent="space-between">
+                                            Twitter <FiExternalLink />
+                                        </MenuItem>
+                                    </Link>
+                                    <Link target="_blank" href="https://github.com/notelabs">
+                                        <MenuItem display="flex" justifyContent="space-between">
+                                            GitHub <FiExternalLink />
+                                        </MenuItem>
+                                    </Link>
+                                </MenuGroup>
                             </MenuList>
                         </Menu>
                     </HStack>

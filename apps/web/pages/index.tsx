@@ -17,6 +17,7 @@ export default function Web() {
       <div>
         <MarketingNav
           links={links}
+          appUrl={appUrl}
         />
         <Hero
           heading="Take notes on the future of notetaking."
