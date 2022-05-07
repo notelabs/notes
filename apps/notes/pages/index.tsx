@@ -1,20 +1,26 @@
-import { Layout } from "ui";
-import { Box, ButtonGroup, Container, Editable, EditableInput, EditablePreview, Heading, HStack, IconButton, Input, SimpleGrid, Skeleton, SkeletonText, Text, Tooltip, useColorModeValue, useEditableControls, useToast } from "@chakra-ui/react"
-import { AddIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import { EmptyState, Layout } from "ui";
+import { Box, Button, ButtonGroup, Container, Editable, EditableInput, EditablePreview, Heading, HStack, IconButton, Input, SimpleGrid, Skeleton, SkeletonText, Text, Tooltip, useColorModeValue, useEditableControls, useToast } from "@chakra-ui/react"
+import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import { useColor } from "hooks"
 import useSWR, { useSWRConfig } from "swr";
 import { formatDistance } from 'date-fns'
 import NextLink from 'next/link'
 import axios from "axios";
-import styles from "../styles/animate.module.css"
 import AddButton from "../components/AddButton";
+import { signIn, useSession } from "next-auth/react";
 
 export default function Page() {
+  const { data: session, status } = useSession()
+
   return (
     <div>
       <Layout selectedName="Home">
         <Container maxW="container.lg" mt={6}>
-          <Notes />
+          {status !== "unauthenticated" ? <Notes /> : <EmptyState
+            title="You&apos;ll need to login"
+            description="This page requires us to fetch data from your account, so please login."
+            button={<Button onClick={() => signIn()}>Login</Button>}
+          />}
         </Container>
       </Layout>
     </div>

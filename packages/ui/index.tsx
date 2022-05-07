@@ -9,3 +9,4 @@ export * from "./Button";
 export * from "./Hero";
 export * from "./Nav";
 export * from "./Sidebar";
+export * from "./EmptyState"
