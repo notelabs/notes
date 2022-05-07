@@ -15,6 +15,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const docs = await prisma.document.findMany({
         where: {
             owner: user?.id
+        },
+        orderBy: {
+            updatedAt: "desc"
         }
     })
 
