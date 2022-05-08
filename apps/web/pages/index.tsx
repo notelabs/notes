@@ -19,7 +19,7 @@ export default function Web() {
         <meta name="twitter:title" content="Take notes on the future of notetaking - Notelabs" />
         <meta name="twitter:description" content="Notelabs makes it easy to to write down your thoughts. Choose your devices, and let Notelabs seamlessly adept to them, letting you get back to your writing." />
         <meta name="twitter:image" content="https://notelabs.me/social.png" />
-        <meta name="twitter:card" content="https://notelabs.me/social.png" />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <div>
         <MarketingNav
