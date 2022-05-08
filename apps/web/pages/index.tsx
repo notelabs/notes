@@ -13,6 +13,8 @@ export default function Web() {
     <>
       <Head>
         <title>Take notes on the future of notetaking - Notelabs</title>
+        <meta name="description" content="Notelabs makes it easy to to write down your thoughts. Choose your devices, and let Notelabs seamlessly adept to them, letting you get back to your writing." />
+        <meta name="keywords" content="Notelabs, notes, thoughts, notetaking" />
       </Head>
       <div>
         <MarketingNav

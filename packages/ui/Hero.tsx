@@ -38,7 +38,7 @@ export function Hero({ heading, description, mainLink }: HeroProps) {
                     spacing={{ base: 8, md: 14 }}
                     py={{ base: 20, md: 36 }}>
                     <FadeAndSlide>
-                        <Heading size="4xl">
+                        <Heading size="4xl" as="h1">
                             {heading}
                         </Heading>
                     </FadeAndSlide>
