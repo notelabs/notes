@@ -26,7 +26,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 
 export default function Simple() {
-    let [isLoading, setLoading] = useState("")
+    let [isDisabled, setDisabled] = useState(false)
     const toast = useToast()
     const router = useRouter()
 
@@ -63,25 +63,26 @@ export default function Simple() {
                         <Formik
                             initialValues={{ email: '' }}
                             onSubmit={(values, actions) => {
-                                    axios.post("/api/waitlist", {
-                                        email: values.email
-                                    }).then(() => {
-                                        toast({
-                                            title: "Success",
-                                            description: "You are now on the waitlist",
-                                            status: "success"
-                                        })
-                                        setTimeout(() => {
-                                            router.push("https://notelabs.me")
-                                        }, 1000)
-                                    }).catch((err) => {
-                                        toast({
-                                            title: "An error occured",
-                                            description: "Try again later",
-                                            status: "error"
-                                        })
+                                axios.post("/api/waitlist", {
+                                    email: values.email
+                                }).then(() => {
+                                    toast({
+                                        title: "Success",
+                                        description: "You are now on the waitlist, we're sending you home.",
+                                        status: "success"
                                     })
-                                    actions.setSubmitting(false)
+                                    setDisabled(true)
+                                    setTimeout(() => {
+                                        router.push("https://notelabs.me")
+                                    }, 2000)
+                                }).catch((err) => {
+                                    toast({
+                                        title: "An error occured",
+                                        description: "Try again later, or check you are'nt already signed up.",
+                                        status: "error"
+                                    })
+                                })
+                                actions.setSubmitting(false)
                             }}
                         >
                             {(props) => (
@@ -90,12 +91,12 @@ export default function Simple() {
                                         <Field name='email' validate={validateEmail}>
                                             {({ field, form }: any) => (
                                                 <FormControl isInvalid={form.errors.email && form.touched.email}>
-                                                    <Input {...field} required type="email" placeholder='Enter an email' id='name' />
+                                                    <Input {...field} required type="email" placeholder='Enter an email' id='name' isDisabled={isDisabled} />
                                                     {form.errors.email ? <FormErrorMessage>{form.errors.email}</FormErrorMessage> : <FormHelperText>No spam, emails once a quarter at most</FormHelperText>}
                                                 </FormControl>
                                             )}
                                         </Field>
-                                        <Button type="submit" isFullWidth colorScheme={'blue'} variant={'solid'} isLoading={isLoading === "email" || props.isSubmitting} isDisabled={props.values.email === '' || props.errors.email ? true : false}>
+                                        <Button type="submit" isFullWidth colorScheme={'blue'} variant={'solid'} isLoading={props.isSubmitting} isDisabled={isDisabled || props.values.email === '' || props.errors.email ? true : false}>
                                             Join waitlist
                                         </Button>
                                     </Stack>

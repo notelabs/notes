@@ -3,22 +3,33 @@ import type { NextFetchEvent, NextRequest } from 'next/server'
 
 export async function middleware(req: NextRequest, ev: NextFetchEvent) {
   if (req.nextUrl.pathname.includes('/api' || '/auth' || '_')) {
-    console.log("hi1")
-    //return NextResponse.next()
+    return NextResponse.next()
   }
 
   const url = new URL(req.nextUrl.href)
-
   url.pathname = '/api/launched'
-  await fetch(url.href).then(async (res) => {
-    const data = await res.text()
-    if (data === "{}") {
-      console.log("hi")
-      return NextResponse.rewrite('/_unlaunched')
-    } else {
-      return NextResponse.next()
-    }
-  }).catch((err) => {
-    console.log(err)
-  })
+
+  async function launched () {
+    let result
+    await fetch(url.href).then(async (res) => {
+      const data = await res.text()
+      if (data === "{}") {
+        result = false
+      } else {
+        result = true
+      }
+    }).catch((err) => {
+      console.log(err)
+      result = true
+    })
+
+    return result
+  }
+
+  if (!await launched()) {
+    url.pathname = '/_unlaunched'
+    return NextResponse.rewrite(url.href)
+  }
+
+  return NextResponse.next()
 }
