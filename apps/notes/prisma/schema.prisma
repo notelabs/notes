@@ -91,3 +91,16 @@ model Document {
     owner     String
     user      User     @relation(fields: [owner], references: [id])
 }
+
+model Waitlist {
+    id        String   @id @default(cuid())
+    email     String   @unique
+    invited   Boolean  @default(false)
+    createdAt DateTime @default(now())
+}
+
+model Launch {
+    id        String   @id @default(cuid())
+    launched  Boolean  @default(false)
+    createdAt DateTime @default(now())
+}
