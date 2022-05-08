@@ -1,4 +1,6 @@
+import splitbee from "@splitbee/web";
 import Head from "next/head";
+import { useEffect } from "react";
 import { Hero, MarketingNav } from "ui";
 import { appUrl } from "../lib/constants";
 
@@ -8,6 +10,13 @@ export default function Web() {
     { name: "Notes", href: "/" },
     { name: "Team", href: "/" }
   ]
+
+  useEffect(() => {
+    splitbee.init({
+      scriptUrl: "/bee.js",
+      apiUrl: "/_hive",
+    })
+  }, [])
 
   return (
     <>
