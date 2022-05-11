@@ -6,7 +6,7 @@ import { appUrl } from "../lib/constants";
 
 export default function Web() {
   const links = [
-    { name: "Dashboard", href: "/" },
+    { name: "About", href: "/" },
     { name: "Notes", href: "/" },
     { name: "Team", href: "/" }
   ]
