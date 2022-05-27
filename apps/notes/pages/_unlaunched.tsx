@@ -78,7 +78,7 @@ export default function Simple() {
                                 }).catch((err) => {
                                     toast({
                                         title: "An error occured",
-                                        description: "Try again later, or check you are'nt already signed up.",
+                                        description: "Try again later, or check you aren't already signed up.",
                                         status: "error"
                                     })
                                 })
