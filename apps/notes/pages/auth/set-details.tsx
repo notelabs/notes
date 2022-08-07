@@ -78,24 +78,23 @@ export default function Login() {
                         >
                             {(props) => (
                                 <>
-                                    <HStack pt={6}>
-                                        <Tooltip label="Start typing to generate an avatar">
+                                    <Tooltip label="Start typing to generate an avatar" shouldWrapChildren>
+                                        <HStack pt={6} maxW="100%" spacing={3}>
+
                                             <Avatar src={session?.user?.image && !props.values.name ? session.user.image : `/api/avatar/${props.values.name ? props.values.name : "hi"}`} icon={<SkeletonCircle height="full" width="full" />}>
                                             </Avatar>
-                                        </Tooltip>
-                                        <VStack
-                                            display="flex"
-                                            alignItems="flex-start"
-                                            spacing="1px"
-                                            ml="2">
-                                            <Tooltip label="Start typing to generate an avatar">
-                                                <Text fontSize="sm">{session?.user?.name && !props.values.name ? session.user.name : props.values.name ? props.values.name : "Start typing"}</Text>
-                                            </Tooltip>
-                                            <Text fontSize="xs" color="gray.600">
-                                                Admin
-                                            </Text>
-                                        </VStack>
-                                    </HStack>
+                                            <VStack
+                                                display="flex"
+                                                alignItems="flex-start"
+                                                spacing="1px"
+                                                ml="2">
+                                                <Text fontSize="sm" isTruncated maxW="100%">{session?.user?.name && !props.values.name ? session.user.name : props.values.name ? props.values.name : "Start typing"}</Text>
+                                                <Text fontSize="xs" color="gray.600">
+                                                    Admin
+                                                </Text>
+                                            </VStack>
+                                        </HStack>
+                                    </Tooltip>
                                     <Form>
                                         {session ? <Field name='name' validate={validateName}>
                                             {({ field, form }: any) => (

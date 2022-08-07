@@ -8,6 +8,8 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
         }
     })
 
+    if (process.env.NODE_ENV === "development") return res.send(true)
+
     if (!launched) return res.json({})
 
     res.json(launched)
