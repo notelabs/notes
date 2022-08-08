@@ -24,6 +24,7 @@ import { IoArrowBack } from 'react-icons/io5';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import AuthFeature from '../components/AuthFeature';
 
 export default function Simple() {
     let [isDisabled, setDisabled] = useState(false)
@@ -47,8 +48,8 @@ export default function Simple() {
             <Head>
                 <title>Waitlist - Notelabs</title>
             </Head>
-            <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
-                <SimpleGrid minH={'100vh'} columns={[1, null, 2]}>
+            <SimpleGrid minH={'100vh'} columns={[1, null, 2]}>
+                <Flex p={8} flex={1} align={'center'} justify={'center'}>
                     <Stack spacing={4} w={'full'} maxW={'md'}>
                         <Box pos="absolute" top={8}>
                             <NextLink href="https://notelabs.me">
@@ -105,19 +106,8 @@ export default function Simple() {
                         </Formik>
                     </Stack>
                 </Flex>
-                <Flex flex={1}>
-                    <Center w="full">
-                        <SimpleGrid columns={[2, null, 3]} spacing={8}>
-                            {list.map((i: FeatureList) => (
-                                <VStack key={i.text}>
-                                    <Icon as={i.icon} boxSize={8} />
-                                    <Text size="sm" opacity={0.5}>{i.text}</Text>
-                                </VStack>
-                            ))}
-                        </SimpleGrid>
-                    </Center>
-                </Flex>
-            </Stack>
+                <AuthFeature />
+            </SimpleGrid>
         </>
     );
 }
