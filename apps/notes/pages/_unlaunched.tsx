@@ -48,7 +48,7 @@ export default function Simple() {
                 <title>Waitlist - Notelabs</title>
             </Head>
             <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
-                <Flex p={8} flex={1} align={'center'} justify={'center'}>
+                <SimpleGrid minH={'100vh'} columns={[1, null, 2]}>
                     <Stack spacing={4} w={'full'} maxW={'md'}>
                         <Box pos="absolute" top={8}>
                             <NextLink href="https://notelabs.me">

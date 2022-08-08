@@ -1,17 +1,12 @@
 import {
     Button,
-    Checkbox,
     Flex,
     FormControl,
-    FormLabel,
     Heading,
     Input,
     Link,
     Stack,
-    Image,
     SimpleGrid,
-    Center,
-    VStack,
     Icon,
     Text,
     Divider,
@@ -20,16 +15,17 @@ import {
     Spacer,
     Box,
 } from '@chakra-ui/react';
-import { Nav } from 'ui';
-import { HiBeaker, HiCollection, HiDeviceMobile, HiDocumentDownload, HiKey, HiLightningBolt, HiPhone } from 'react-icons/hi';
 import { FaGithub } from 'react-icons/fa';
 import { signIn, useSession } from "next-auth/react"
 import { useState } from 'react';
 import Head from 'next/head';
-import { FeatureList, list } from '../../lib/features';
 import { Formik, Form, Field } from 'formik';
 import { IoArrowBack } from 'react-icons/io5';
 import NextLink from "next/link"
+import Image from "next/future/image"
+import auth_bg from "../../public/auth_bg.jpg"
+import { ExternalLinkIcon } from '@chakra-ui/icons';
+import AuthFeature from '../../components/AuthFeature';
 
 export default function Login() {
     let [isLoading, setLoading] = useState("")
@@ -69,7 +65,7 @@ export default function Login() {
             <Head>
                 <title>Login - Notelabs</title>
             </Head>
-            <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
+            <SimpleGrid minH={'100vh'} columns={[1, null, 2]}>
                 <Flex p={8} flex={1} align={'center'} justify={'center'}>
                     <Stack spacing={4} w={'full'} maxW={'md'}>
                         <Box pos="absolute" top={8}>
@@ -115,19 +111,8 @@ export default function Login() {
                         </Button>
                     </Stack>
                 </Flex>
-                <Flex flex={1}>
-                    <Center w="full">
-                        <SimpleGrid columns={[2, null, 3]} spacing={8}>
-                            {list.map((i: FeatureList) => (
-                                <VStack key={i.text}>
-                                    <Icon as={i.icon} boxSize={8} />
-                                    <Text size="sm" opacity={0.5}>{i.text}</Text>
-                                </VStack>
-                            ))}
-                        </SimpleGrid>
-                    </Center>
-                </Flex>
-            </Stack>
+                <AuthFeature />
+            </SimpleGrid>
         </>
     );
 }

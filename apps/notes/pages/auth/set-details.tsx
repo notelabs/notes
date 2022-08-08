@@ -5,10 +5,7 @@ import {
     Heading,
     Input,
     Stack,
-    SimpleGrid,
-    Center,
     VStack,
-    Icon,
     Text,
     Avatar,
     SkeletonCircle,
@@ -18,14 +15,14 @@ import {
     Skeleton,
     FormHelperText,
     useToast,
+    SimpleGrid,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { FeatureList, list } from '../../lib/features';
-import { Formik, Form, Field, useFormikContext } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import axios from "axios"
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router'
+import AuthFeature from '../../components/AuthFeature';
 
 export default function Login() {
     const { data: session, status } = useSession({
@@ -51,7 +48,7 @@ export default function Login() {
                 <title>Almost there - Notelabs</title>
             </Head>
             <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
-                <Flex p={8} flex={1} align={'center'} justify={'center'}>
+                <SimpleGrid minH={'100vh'} columns={[1, null, 2]}>
                     <Stack spacing={4} w={'full'} maxW={'md'}>
                         <Heading fontSize={'3xl'}>We&apos;ll need a few more details</Heading>
                         <Text opacity={0.75}>We&apos;ll need to know your name, which will allow us to generate an avatar for you.</Text>
@@ -126,19 +123,8 @@ export default function Login() {
                             )}
                         </Formik>
                     </Stack>
-                </Flex>
-                <Flex flex={1}>
-                    <Center w="full">
-                        <SimpleGrid columns={[2, null, 3]} spacing={8}>
-                            {list.map((i: FeatureList) => (
-                                <VStack key={i.text}>
-                                    <Icon as={i.icon} boxSize={8} />
-                                    <Text size="sm" opacity={0.5}>{i.text}</Text>
-                                </VStack>
-                            ))}
-                        </SimpleGrid>
-                    </Center>
-                </Flex>
+                </SimpleGrid>
+                <AuthFeature />
             </Stack>
         </>
     );
