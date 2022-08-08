@@ -47,8 +47,8 @@ export default function Login() {
             <Head>
                 <title>Almost there - Notelabs</title>
             </Head>
-            <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
-                <SimpleGrid minH={'100vh'} columns={[1, null, 2]}>
+            <SimpleGrid minH={'100vh'} columns={[1, null, 2]}>
+                <Flex p={8} flex={1} align={'center'} justify={'center'}>
                     <Stack spacing={4} w={'full'} maxW={'md'}>
                         <Heading fontSize={'3xl'}>We&apos;ll need a few more details</Heading>
                         <Text opacity={0.75}>We&apos;ll need to know your name, which will allow us to generate an avatar for you.</Text>
@@ -96,14 +96,14 @@ export default function Login() {
                                         {session ? <Field name='name' validate={validateName}>
                                             {({ field, form }: any) => (
                                                 <FormControl isInvalid={form.errors.name && form.touched.name}>
-                                                    <Input {...field} id='name' required autoComplete='off' type="text" placeholder="What's your name" />
+                                                    <Input {...field} id='name' autoComplete='off' type="text" placeholder="What's your name" />
                                                     {form.errors.name && <FormErrorMessage>{form.errors.name}</FormErrorMessage>}
                                                     {session.user?.name && <FormHelperText>Leave blank to use the name shown above</FormHelperText>}
                                                 </FormControl>
                                             )}
                                         </Field> : <Skeleton rounded="base">
                                             <FormControl>
-                                                <Input id='name' required autoComplete='off' type="text" placeholder="What's your name" />
+                                                <Input id='name' autoComplete='off' type="text" placeholder="What's your name" />
                                                 <FormErrorMessage>Hi</FormErrorMessage>
                                             </FormControl>
                                         </Skeleton>}
@@ -123,9 +123,9 @@ export default function Login() {
                             )}
                         </Formik>
                     </Stack>
-                </SimpleGrid>
+                </Flex>
                 <AuthFeature />
-            </Stack>
+            </SimpleGrid>
         </>
     );
 }
