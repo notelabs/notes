@@ -5,7 +5,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import prisma from "../../../lib/prisma"
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function auth(req: NextApiRequest, res: NextApiResponse) {
+export default async function auth(req: any, res: any) {
   // Do whatever you want here, before the request is passed down to `NextAuth`
   return await NextAuth(req, res, {
     pages: {

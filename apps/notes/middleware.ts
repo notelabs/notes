@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
-import type { NextFetchEvent, NextRequest } from 'next/server'
+import type { NextRequest } from 'next/server'
 
-export async function middleware(req: NextRequest, ev: NextFetchEvent) {
+export async function middleware(req: NextRequest) {
   if (req.nextUrl.pathname.includes('/api' || '/auth' || '_')) {
     return NextResponse.next()
   }
