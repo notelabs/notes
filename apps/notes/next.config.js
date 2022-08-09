@@ -9,5 +9,18 @@ module.exports = withTM({
     images: {
       allowFutureImage: true
     }
+  },
+  async headers() {
+    return [
+      {
+        source: '/fonts/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, immutable, no-transform, s-maxage=31536000, max-age=31536000'
+          }
+        ]
+      }
+    ]
   }
 });

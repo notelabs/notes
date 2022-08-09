@@ -11,11 +11,6 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next()
   }
 
-  if (req.nextUrl.pathname.startsWith('/fonts')) {
-    response.headers.set('Cache-Control', `public, immutable, no-transform, s-maxage=31536000, max-age=31536000`)
-    return NextResponse.next()
-  }
-
   const url = new URL(req.nextUrl.href)
   url.pathname = '/api/launched'
 
