@@ -12,7 +12,8 @@ export async function middleware(req: NextRequest) {
   }
 
   if (req.nextUrl.pathname.startsWith('/fonts')) {
-    response.headers.get('Cache-Control', `public, immutable, no-transform, s-maxage=31536000, max-age=31536000`)
+    response.headers.set('Cache-Control', `public, immutable, no-transform, s-maxage=31536000, max-age=31536000`)
+    return NextResponse.next()
   }
 
   const url = new URL(req.nextUrl.href)
