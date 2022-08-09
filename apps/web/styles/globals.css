@@ -1,11 +1,3 @@
-:root[data-theme="light"] {
-  --secondary-color: var(--chakra-colors-gray-300);
-}
-
-:root[data-theme="dark"] {
-  --secondary-color: var(--chakra-colors-whiteAlpha-400);
-}
-
 @font-face {
   font-family: "Cal Sans";
   font-style: normal;
