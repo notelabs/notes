@@ -2,12 +2,17 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export async function middleware(req: NextRequest) {
-  if (req.nextUrl.pathname.includes('/api' || '/auth' || '_' || '/_next')) {
+  const response = NextResponse.next()
+  if (req.nextUrl.pathname.includes('/api' || '/auth' || '_')) {
     return NextResponse.next()
   }
 
   if (req.nextUrl.pathname.startsWith('/_next')) {
     return NextResponse.next()
+  }
+
+  if (req.nextUrl.pathname.startsWith('/fonts')) {
+    response.headers.get('Cache-Control', `public, immutable, no-transform, s-maxage=31536000, max-age=31536000`)
   }
 
   const url = new URL(req.nextUrl.href)
