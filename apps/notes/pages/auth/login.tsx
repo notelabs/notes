@@ -4,7 +4,6 @@ import {
     FormControl,
     Heading,
     Input,
-    Link,
     Stack,
     SimpleGrid,
     Icon,
@@ -13,7 +12,6 @@ import {
     FormErrorMessage,
     FormHelperText,
     Spacer,
-    Box,
     SlideFade,
     useDisclosure,
     Container,
@@ -25,9 +23,6 @@ import Head from 'next/head';
 import { Formik, Form, Field } from 'formik';
 import { IoArrowBack } from 'react-icons/io5';
 import NextLink from "next/link"
-import Image from "next/future/image"
-import auth_bg from "../../public/auth_bg.jpg"
-import { ExternalLinkIcon } from '@chakra-ui/icons';
 import AuthFeature from '../../components/AuthFeature';
 
 export default function Login() {

@@ -49,13 +49,13 @@ export default function Login() {
     return (
         <>
             <Head>
-                <title>Edit profile - Notelabs</title>
+                <title>Almost there - Notelabs</title>
             </Head>
             <SimpleGrid minH={'100vh'} columns={[1, null, 2]}>
                 <Flex p={8} flex={1} align={'center'} justify={'center'}>
                     <SlideFade in={isOpen} offsetY="20px">
                         <Stack spacing={4} w={'full'} maxW={'md'}>
-                            <Heading fontSize={'3xl'}>Edit your profile</Heading>
+                            <Heading fontSize={'3xl'}>We&apos;ll need a few more details</Heading>
                             <Text opacity={0.75}>We&apos;ll need to know your name, which will allow us to generate an avatar for you.</Text>
                             <Formik
                                 initialValues={{ name: status === "authenticated" && session?.user?.name ? session.user.name : '' }}
@@ -122,18 +122,8 @@ export default function Login() {
                                                 type='submit'
                                                 isFullWidth
                                             >
-                                                Save changes
+                                                Confirm details
                                             </Button>
-                                            <Link href="/">
-                                                <Button
-                                                    mt={2}
-                                                    variant="ghost"
-                                                    isFullWidth
-                                                    onClick={onToggle}
-                                                >
-                                                    Go home
-                                                </Button>
-                                            </Link>
                                         </Form>
                                     </>
                                 )}

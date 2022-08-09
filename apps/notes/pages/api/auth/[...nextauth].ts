@@ -12,7 +12,7 @@ export default async function auth(req: any, res: any) {
       signIn: '/auth/login',
       error: '/auth/error',
       verifyRequest: '/auth/verify',
-      newUser: '/auth/set-details'
+      newUser: '/auth/new-user'
     },
     secret: process.env.SECRET,
     adapter: PrismaAdapter(prisma),

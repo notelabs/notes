@@ -252,7 +252,7 @@ const MobileNav = ({ onOpen, title, ...rest }: MobileProps) => {
                                     display={{ base: 'none', md: 'flex' }}
                                     alignItems="flex-start"
                                     spacing="1px"
-                                    ml="2"
+                                    pl={session ? 2 : 0}
                                 >
                                     <Skeleton isLoaded={status !== "loading"}>
                                         <Text fontSize="sm">{session?.user?.name}</Text>
@@ -273,7 +273,7 @@ const MobileNav = ({ onOpen, title, ...rest }: MobileProps) => {
                             borderColor={useColorModeValue('gray.200', 'gray.700')}
                         >
                             <Box hidden={status !== "authenticated"}>
-                                <Link style={{ textDecoration: 'none' }} href='/auth/set-details'>
+                                <Link as={NextLink} style={{ textDecoration: 'none' }} href='/auth/set-details'>
                                     <MenuItem>Profile</MenuItem>
                                 </Link>
                                 <MenuDivider />
