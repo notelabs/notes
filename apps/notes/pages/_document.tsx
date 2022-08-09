@@ -8,7 +8,6 @@ export default function Document() {
       </Head>
       <body>
         <Main />
-        <script async data-api="/_hive" src="/bee.js"></script>
         <NextScript />
       </body>
     </Html>
