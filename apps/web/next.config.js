@@ -18,4 +18,23 @@ module.exports = withTM({
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: '/d/:slug',
+        destination: 'https://app.notelabs.me/document/:slug',
+        permanent: true
+      },
+      {
+        source: '/doc/:slug',
+        destination: 'https://app.notelabs.me/document/:slug',
+        permanent: true
+      },
+      {
+        source: '/document/:slug',
+        destination: 'https://app.notelabs.me/document/:slug',
+        permanent: true
+      }
+    ]
+  }
 });

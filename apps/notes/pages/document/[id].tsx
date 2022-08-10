@@ -1,5 +1,5 @@
 import { ArrowBackIcon, CheckIcon, CloseIcon, EditIcon } from '@chakra-ui/icons'
-import { Box, Container, Heading, HStack, Text, IconButton, Textarea, ButtonGroup, Button, Editable, EditableInput, EditablePreview, Input, Tooltip, useEditableControls, useToast } from '@chakra-ui/react'
+import { Box, Container, Heading, HStack, Text, IconButton, Textarea, ButtonGroup, Button, Editable, EditableInput, EditablePreview, Input, Tooltip, useEditableControls, useToast, ModalCloseButton, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, FormControl, FormLabel, Switch, FormHelperText, Divider, Badge, useClipboard } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
 import prisma from '../../lib/prisma'
@@ -11,9 +11,20 @@ import { useCallback, useState } from 'react'
 import { useAutosave } from 'react-autosave'
 import Head from 'next/head'
 import useSWR, { useSWRConfig } from 'swr'
+import { useRouter } from 'next/router'
 
 export default function Doc({ data }: any) {
     const secondaryColor = useColor({ color: "secondary" })
+    const router = useRouter()
+
+    // share modal
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    let [copyUrl, setCopy] = useState(`https://notelabs.me/d/${router.query.id}`)
+    const { hasCopied, onCopy } = useClipboard(copyUrl)
+    // share modal state
+    let [publicDoc, setPublic] = useState(false)
+    let [indexedDoc, setIndexed] = useState(false)
+
     const [input, setInput] = useState(data.content)
     const save = useCallback(() => axios.post('/api/document/update', { id: data.id, content: input }), [])
     useAutosave({ data: input, onSave: save });
@@ -72,7 +83,47 @@ export default function Doc({ data }: any) {
                 </HStack>
                 <ButtonGroup>
                     <IconButton aria-label='Update details' variant="ghost" icon={<HiPencil />} />
-                    <Button colorScheme="blue">Share</Button>
+                    <Button colorScheme="blue" onClick={onOpen}>Share</Button>
+                    <Modal isOpen={isOpen} onClose={onClose}>
+                        <ModalOverlay />
+                        <ModalContent>
+                            <ModalHeader>Share</ModalHeader>
+                            <ModalCloseButton />
+                            <ModalBody>
+                                <FormControl display="flex">
+                                    <Input value={publicDoc ? copyUrl : ""} placeholder='This document is private.' readOnly />
+                                    <Button onClick={onCopy} ml={2} isDisabled={!publicDoc}>
+                                        {hasCopied ? 'Copied' : 'Copy'}
+                                    </Button>
+                                </FormControl>
+                                <Divider my={8} />
+                                <FormControl>
+                                    <HStack justifyContent="space-between">
+                                        <FormLabel htmlFor='public-doc' mb='0'>
+                                            Public document
+                                        </FormLabel>
+                                        <Switch id='public-doc' isChecked={publicDoc} onChange={(e) => setPublic(e.target.checked)} />
+                                    </HStack>
+                                    <FormHelperText>Allows anyone with the link to read your document.</FormHelperText>
+                                </FormControl>
+                                <FormControl mt={8}>
+                                    <HStack justifyContent="space-between">
+                                        <FormLabel htmlFor='indexed-doc' mb='0'>
+                                            Search engine indexing <Badge colorScheme="purple">PRO</Badge>
+                                        </FormLabel>
+                                        <Switch id='indexed-doc' isChecked={indexedDoc} onChange={(e) => setIndexed(e.target.checked)} isDisabled />
+                                    </HStack>
+                                    <FormHelperText>Allows your document to be indexed by search engines. Requires your document to be public.</FormHelperText>
+                                </FormControl>
+                            </ModalBody>
+
+                            <ModalFooter>
+                                <Button colorScheme='blue' onClick={onClose}>
+                                    Close
+                                </Button>
+                            </ModalFooter>
+                        </ModalContent>
+                    </Modal>
                 </ButtonGroup>
             </Box>
             <Box py={6}>

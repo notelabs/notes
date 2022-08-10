@@ -22,5 +22,19 @@ module.exports = withTM({
         ]
       }
     ]
+  },
+  async redirects() {
+    return [
+      {
+        source: '/d/:slug',
+        destination: '/document/:slug',
+        permanent: true
+      },
+      {
+        source: '/doc/:slug',
+        destination: '/document/:slug',
+        permanent: true
+      }
+    ]
   }
 });
